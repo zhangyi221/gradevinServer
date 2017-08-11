@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>注册激活</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="{{resoucePath}}/libs/bootstrap/css/bootstrap.min.css">
+
+  <script src="{{resoucePath}}/libs/sweetalert2/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="{{resoucePath}}/libs/sweetalert2/dist/sweetalert2.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+  <style>
+    .login-page,
+    .register-page {
+      background: #d2d6de;
+    }
+
+    body {
+      font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .login-box {
+      width: 80%;
+      position: absolute;
+      margin: 7% auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .login-logo {
+      font-size: 25px;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 300;
+    }
+
+    .login-box-body {
+      background: #fff;
+      padding: 20px;
+      border-top: 0;
+      color: #666;
+    }
+
+    .login-box-msg {
+      margin: 0;
+      text-align: center;
+      padding: 0 20px 20px 20px;
+    }
+  </style>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="{{resoucePath}}/libs/html5shiv.min.js"></script>
+    <script src="{{resoucePath}}/libs/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+    <div class="login-logo">
+      <b><a href="#" target="_blank">注册激活</a></b>
+    </div>
+        <div style="text-align: center;">
+          {{#if msg}}
+            <p>{{msg}}<p>
+          {{else}}
+            <p>感谢您的使用<p>
+          {{/if }}
+        </div>
+      {{!--<a href="#" class="text-center">忘记密码</a>--}}
+    </div>
+    <!-- /.login-box-body -->
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery 2.2.3 -->
+  <script src="{{resoucePath}}/libs/jQuery/jquery-2.2.3.min.js"></script>
+  
+  <script>
+    
+        if ({{code}} != '0'){
+            var title = 'code[' + {{code}} + ']'
+            swal(
+            '{{msg}}',
+            title,
+            'error'
+            )
+        }else{
+            swal(
+            '{{msg}}',
+            '',
+            'success'
+            )
+        }
+
+
+  </script>
+</body>
+
+</html>

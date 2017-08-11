@@ -1,0 +1,1146 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a api document of the sample node.js server framework.",
+        "version": "1.0.0",
+        "title": "RESTful API Document",
+        "termsOfService": "",
+        "contact": {
+            "email": "super_xp@126.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "auth",
+            "description": "客户认证",
+            "externalDocs": {
+                "description": "",
+                "url": ""
+            }
+        },
+        {
+            "name": "user",
+            "description": "客户信息",
+            "externalDocs": {
+                "description": "",
+                "url": ""
+            }
+        },
+        {
+            "name": "utils",
+            "description": "工具",
+            "externalDocs": {
+                "description": "",
+                "url": ""
+            }
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/api/auth/signInWithEmailAndPassword": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "用邮箱地址和密码登录",
+                "description": "用邮箱地址和密码登录",
+                "operationId": "signInWithEmailAndPassword",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SingUp_Email_Data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "X-Rate-Limit": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "calls per hour allowed by the user"
+                            },
+                            "X-Expires-After": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "date in UTC when token expires"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid username/password supplied"
+                    }
+                }
+            }
+        },
+        "/api/auth/createUserWithEmailAndPassword": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "使用邮箱和密码注册",
+                "description": "",
+                "operationId": "SingUp_Data",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SingUp_Email_Data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/auth/sendPasswordResetEmail": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "通过邮箱重置密码",
+                "description": "",
+                "operationId": "sendPasswordResetEmail",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SendPasswordResetEmail_Email_Data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/auth/signOut": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "退出登录",
+                "description": "退出登录",
+                "operationId": "signOut",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/auth/resendStringTokenByEmail": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "重新向邮箱发送stringtoken",
+                "description": "重新向邮箱发送stringtoken",
+                "operationId": "resendStringTokenByEmail",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/resendStringTokenByEmail_Data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user/current/{uid}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "获取客户信息",
+                "description": "获取客户信息",
+                "operationId": "current",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "description": "客户uid ",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid id supplied"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "修改客户信息",
+                "description": "修改客户信息",
+                "operationId": "updateUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "description": "id that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Update_Data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid user supplied"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "删除客户",
+                "description": "删除客户",
+                "operationId": "deleteUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "description": "客户uid ",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid id supplied"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/user/currentByToken": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "通过token获取客户信息",
+                "description": "通过token获取客户信息",
+                "operationId": "currentByToken",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/auth/test": {
+            "get": {
+                "tags": [
+                    "test"
+                ],
+                "summary": "测试",
+                "description": "测试",
+                "operationId": "test",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user/updatePasswordByStringtoken": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "根据stringtoken修改密码",
+                "description": "根据stringtoken修改密码",
+                "operationId": "updatePasswordBystringtoken",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "根据stringtoken修改密码",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdatePasswordByStringtoken_Data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/utils/getJpg": {
+            "get": {
+                "tags": [
+                    "utils"
+                ],
+                "summary": "获取指定目录jpg文件个数",
+                "description": "获取指定目录jpg文件个数",
+                "operationId": "getJpg",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "description": "指定目录 ",
+                        "required": true,
+                        "type": "string",
+                        "default": "slides"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "X-Rate-Limit": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "calls per hour allowed by the user"
+                            },
+                            "X-Expires-After": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "date in UTC when token expires"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid username/password supplied"
+                    }
+                }
+            }
+        },
+        "/api/utils/captcha": {
+            "get": {
+                "tags": [
+                    "utils"
+                ],
+                "summary": "获取验证码",
+                "description": "获取验证码",
+                "operationId": "captcha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "width",
+                        "in": "query",
+                        "description": "宽",
+                        "required": true,
+                        "type": "string",
+                        "default": "80"
+                    },
+                    {
+                        "name": "height",
+                        "in": "query",
+                        "description": "高",
+                        "required": true,
+                        "type": "string",
+                        "default": "30"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "X-Rate-Limit": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "calls per hour allowed by the user"
+                            },
+                            "X-Expires-After": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "date in UTC when token expires"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid username/password supplied"
+                    }
+                }
+            }
+        },
+        "/data/data/save": {
+            "post": {
+                "tags": [
+                    "data"
+                ],
+                "summary": "数据插入",
+                "description": "数据插入",
+                "operationId": "mongodb_save",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/test_data_save"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/data/data/findandupdate": {
+            "post": {
+                "tags": [
+                    "data"
+                ],
+                "summary": "数据更新",
+                "description": "数据更新",
+                "operationId": "findandupdate",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/test_data_update"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/data/data/delete": {
+            "post": {
+                "tags": [
+                    "data"
+                ],
+                "summary": "数据更新",
+                "description": "数据更新",
+                "operationId": "findandupdate",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/test_data_delete"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/data/data/find": {
+            "post": {
+                "tags": [
+                    "data"
+                ],
+                "summary": "数据更新",
+                "description": "数据更新",
+                "operationId": "find",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/test_data_find"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/data/data/getAd": {
+            "get": {
+                "tags": [
+                    "data"
+                ],
+                "summary": "获取广告信息",
+                "description": "获取广告信息",
+                "operationId": "getAd",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "description": "路径",
+                        "required": true,
+                        "type": "string",
+                        "default": "images/ad/home/slides/"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/data/data/test": {
+            "post": {
+                "tags": [
+                    "data"
+                ],
+                "summary": "数据更新",
+                "description": "数据更新",
+                "operationId": "findandupdate",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/upload/uploadImg64": {
+            "post": {
+                "tags": [
+                    "upload"
+                ],
+                "summary": "上传bate64图片",
+                "description": "上传bate64图片",
+                "operationId": "uploadImg64",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "根据stringtoken修改密码",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/uploadImg64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+        ,
+        "/api/upload/uploadImg64Qn": {
+            "post": {
+                "tags": [
+                    "upload"
+                ],
+                "summary": "上传bate64图片至七牛",
+                "description": "上传bate64图片至七牛",
+                "operationId": "uploadImg64Qn",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "根据stringtoken修改密码",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/uploadImg64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "authorization",
+            "in": "header"
+        }
+    },
+    "definitions": {
+        "Update_Data": {
+            "type": "object",
+            "properties": {
+                "displayName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "phoneVerified": {
+                    "type": "boolean"
+                },
+                "isAnonymous": {
+                    "type": "boolean"
+                },
+                "photoURL": {
+                    "type": "string"
+                },
+                "providerData": {
+                    "type": {}
+                },
+                "providerId": {
+                    "type": "string"
+                },
+                "createDate": {
+                    "type": "data"
+                },
+                "update_at": {
+                    "type": "data"
+                },
+                "lockUntil": {
+                    "type": "number"
+                },
+                "loginAttempts": {
+                    "type": "number"
+                }
+            },
+            "xml": {
+                "name": "Update_Data"
+            }
+        },
+        "SingUp_Email_Data": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "111@111.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "111111"
+                }
+            },
+            "xml": {
+                "name": "SingUp_Email_Data"
+            }
+        },
+        "SendPasswordResetEmail_Email_Data": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "111@111.com"
+                }
+            },
+            "xml": {
+                "name": "SendPasswordResetEmail_Email_Data"
+            }
+        },
+        "resendStringTokenByEmail_Data": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "111@111.com"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "sign/resetpass"
+                }
+            },
+            "xml": {
+                "name": "SendPasswordResetEmail_Email_Data"
+            }
+        },
+        "UpdatePasswordByStringtoken_Data": {
+            "type": "object",
+            "properties": {
+                "stringtoken": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "222222"
+                }
+            },
+            "xml": {
+                "name": "UpdatePasswordByStringtoken_Data"
+            }
+        },
+        "test_data_save": {
+            "type": "object",
+            "properties": {
+                "document": {
+                    "type": "string",
+                    "example": "testabc"
+                },
+                "operation": {
+                    "type": "string",
+                    "example": "save"
+                },
+                "document_type": {
+                    "$ref": "#/definitions/test_document_type"
+                },
+                "data": {
+                    "$ref": "#/definitions/test_document_data"
+                }
+            },
+            "xml": {
+                "name": "test_document"
+            }
+        },
+        "test_document_type": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "example": "String"
+                        },
+                        "index": {
+                            "type": "boolean",
+                            "example": true
+                        }
+                    }
+                },
+                "email": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "example": "String"
+                        },
+                        "index": {
+                            "type": "object",
+                            "properties": {
+                                "unique": {
+                                    "type": "boolean",
+                                    "example": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "role": {
+                            "type": "string",
+                            "example": "Boolean"
+                        },
+                        "testaa": {
+                            "type": "object",
+                            "properties": {
+                                "aa": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "example": "Date"
+                                        },
+                                        "default": {
+                                            "type": "object",
+                                            "example": "Date.now()"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "xml": {
+                "name": "test_document_type"
+            }
+        },
+        "test_document_data": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "testname1"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "111@111.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "111111"
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "role": {
+                            "type": "boolean",
+                            "example": false
+                        },
+                        "father": {
+                            "type": "string",
+                            "example": "supper"
+                        },
+                        "testaa": {
+                            "type": "object",
+                            "properties": {
+                                "bb": {
+                                    "type": "string",
+                                    "example": "321321"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "xml": {
+                "name": "test_document_data"
+            }
+        },
+        "test_data_update": {
+            "type": "object",
+            "properties": {
+                "document": {
+                    "type": "string",
+                    "example": "testabc"
+                },
+                "operation": {
+                    "type": "string",
+                    "example": "update"
+                },
+                "find": {
+                    "$ref": "#/definitions/test_document_find"
+                },
+                "update": {
+                    "$ref": "#/definitions/test_document_update"
+                }
+            },
+            "xml": {
+                "name": "test_data_update"
+            }
+        },
+        "test_document_find": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "111@111.com"
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "role": {
+                            "type": "boolean",
+                            "example": false
+                        },
+                        "testaa": {
+                            "type": "object",
+                            "properties": {
+                                "bb": {
+                                    "type": "string",
+                                    "example": "321321"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "xml": {
+                "name": "test_document_find"
+            }
+        },
+        "test_document_update": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "testname11"
+                }
+            },
+            "xml": {
+                "name": "test_document_update"
+            }
+        },
+        "test_data_delete": {
+            "type": "object",
+            "properties": {
+                "document": {
+                    "type": "string",
+                    "example": "testabc"
+                },
+                "operation": {
+                    "type": "string",
+                    "example": "delete"
+                },
+                "find": {
+                    "$ref": "#/definitions/test_document_delete_find"
+                }
+            },
+            "xml": {
+                "name": "test_data_delete"
+            }
+        },
+        "test_document_delete_find": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "testname12"
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "testaa": {
+                            "type": "object",
+                            "properties": {
+                                "bb": {
+                                    "type": "object",
+                                    "properties": {
+                                        "$lt": {
+                                            "type": "string",
+                                            "example": "321321"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "xml": {
+                "name": "test_document_delete_find"
+            }
+        },
+        "test_data_find": {
+            "type": "object",
+            "properties": {
+                "document": {
+                    "type": "string",
+                    "example": "testabc"
+                },
+                "find": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "example": "testname12"
+                        },
+                        "auth": {
+                            "type": "object",
+                            "properties": {
+                                "testaa": {
+                                    "type": "object",
+                                    "properties": {
+                                        "bb": {
+                                            "type": "object",
+                                            "properties": {
+                                                "$lt": {
+                                                    "type": "string",
+                                                    "example": "321321"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "show": {
+                    "schema": {
+                        "type": "array",
+                        "example": [
+                            "name",
+                            "email",
+                            "role"
+                        ]
+                    }
+                },
+                "noshow": {
+                    "schema": {
+                        "type": "array",
+                        "example": [
+                            "password",
+                            "_id",
+                            "__v"
+                        ]
+                    }
+                }
+            },
+            "xml": {
+                "name": "test_data_delete"
+            }
+        },
+        "uploadImg64": {
+            "type": "object",
+            "properties": {
+                "imageBase64": {
+                    "type": "string",
+                    "example": "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AgAAAEIEAAAAhAgAAAAIEQAAABAiAAAAIEQAAABAiAAAAIAQAQAAACECAAAAQgQAAACECAAAAAgRAAAAECIAAAAgRAAAAECIAAAAgBABAAAAIQIAAABCBAAAAIQIAAAACBEAAAAQIgAAACBEAAAAQIgAAACAEAEAAAAhAgAAAEIEAAAAhAgAAAAIEQAAABAiAAAAIEQAAABAiAAAAIAQAQAAACECAAAAQgQAAACECAAAAAgRAAAAECIAAAAgRAAAAECIAAAAgBABAAAAIQIAAABCBAAAAIQIAAAACBEAAAAQIgAAACBEAAAAQIgAAACAEAEAAAAhAgAAAEIEAAAAhAgAAAAIEQAAABAiAAAAIEQAAABAiAAAAIAQAQAAACECAAAAQgQAAACECAAAAAgRAAAAECIAAAAgRAAAAECIAAAAgBABAAAAIQIAAABCBAAAAIQIAAAACBEAAAAQIgAAACBEAAAAQIgAAACAEAEAAAAhAgAAAEIEAAAAhAgAAAAIEQAAABAiAAAAIEQAAABAiAAAAIAQAQAAACECAAAAQgQAAACECAAAAAgRAAAAECIAAAAgRAAAAECIAAAAgBABAAAAIQIAAABCBAAAAIQIAAAACBEAAAAQIgAAACBEAAAAQIgAAACAEAEAAAAhAgAAAEIEAAAAhAgAAAAIEQAAABAiAAAAIEQAAABAiAAAAIAQAQAAACECAAAAQgQAAACECAAAAAgRAAAAECIAAAAgRAAAAECIAAAAgBABAAAAIQIAAABCBAAAAIQIAAAACBEAAAAQIgAAACBEAAAAQIgAAACAEAEAAAAhAgAAAEIEAAAAhAgAAAAIEQAAABAiAAAAIEQAAABAiAAAAIAQAQAAACECAAAAQgQAAACECAAAAAgRAAAAECIAAAAgRAAAAECIAAAAgJD/A4uxW93hVQiIAAAAAElFTkSuQmCC"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "avatars"
+                }
+            }
+        },
+        "ApiResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
