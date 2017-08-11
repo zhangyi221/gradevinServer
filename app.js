@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 //mongodb
 var mongodb = require('./utils/mongodb')
-var mongo = new mongodb()
+mongodb.Mongo()
 //session-redis
 var RedisStore = require('connect-redis')(session)
 var redis = require('./utils/redis')
