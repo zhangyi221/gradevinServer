@@ -8,7 +8,7 @@ var tokenUtil = require('../utils/token')
 var config = require('../config/' + process.env.NODE_ENV)
 
 module.exports = jwt({
-  secret: Buffer.from(secret, 'base64'),
+  secret: new Buffer(secret, 'base64'),
   requestProperty: 'user', // By default, the decoded token is attached to req.user
   credentialsRequired: true, // You might want to use this module to identify registered users while still providing access to unregistered users
   getToken: tokenUtil.getToken // Where the token is
