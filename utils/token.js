@@ -8,7 +8,7 @@ var secretKey = require('../config/secret').token_secret_key
 var redis = require('../utils/redis')
 var config = require('../config/' + process.env.NODE_ENV)
 
-var secret = new Buffer.from(secretKey, 'base64')
+var secret = new Buffer(secretKey, 'base64')
 
 exports.generateToken = function (payload) {
   var token = jwt.sign(payload, secret, { expiresIn: config.TOKEN_EXPIRATION })
