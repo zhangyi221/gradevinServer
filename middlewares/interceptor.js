@@ -14,12 +14,12 @@ var cookieParser = require('cookie-parser');
 var secretKey = require('../config/secret')
 
 module.exports = function (req, res, next) {
-    let token = tokenUtil.getToken(req)
-    let secret = secretKey.token_secret_key
-    let secrets = !secret || Array.isArray(secret)
+    var token = tokenUtil.getToken(req)
+    var secret = secretKey.token_secret_key
+    var secrets = !secret || Array.isArray(secret)
         ? (secret || [])
         : [secret];
-    let session_id = cookie_util.getcookie(req, 'jsessionid', secrets)
+    var session_id = cookie_util.getcookie(req, 'jsessionid', secrets)
     if (session_id === undefined) {
         return res.api_error( { code: code.getErrorCode_name('auth_cookie_unsign'), msg: code.getErrorMessage_name('auth_cookie_unsign') })//cookie签名验证失败
     }
@@ -30,13 +30,13 @@ module.exports = function (req, res, next) {
         }
         if (replay) {
             //校验sessionid并检查赋值user信息
-            let _id = replay
+            var _id = replay
             redis.redisClient.get('sess:' + session_id, (err, replay) => {
                 if (err) {
                     return res.api_error( { code: 99999, msg: err.message })
                 }
                 if (replay) {
-                    let replay_obj = JSON.parse(replay)
+                    var replay_obj = JSON.parse(replay)
                     //判断session中用户数据是否存在
                     if (!replay_obj.user) {
                         //不存在就赋值
