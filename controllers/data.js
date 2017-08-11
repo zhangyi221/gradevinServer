@@ -33,9 +33,9 @@ var dynamic = require('../models/dynamic')
  */
 exports.save = function (req, res) {
     //document名称
-    let document_path = req.body.document
+    var document_path = req.body.document
     //document数据
-    let document_data = req.body.data
+    var document_data = req.body.data
     mongoose.connection.db.collection(document_path).insertOne(document_data).then(doc => {
         return res.api({ n: doc.result.n }, { code: 0, msg: '保存数据成功' })
     }).catch(err => {
@@ -69,11 +69,11 @@ exports.save = function (req, res) {
  */
 exports.findandupdate = function (req, res) {
     //document名称
-    let document_path = req.body.document
+    var document_path = req.body.document
     //find数据
-    let document_find = req.body.find
+    var document_find = req.body.find
     //update数据
-    let document_update = req.body.update
+    var document_update = req.body.update
     //转换update格式
     document_update = {
         $set: document_update
@@ -114,9 +114,9 @@ exports.findandupdate = function (req, res) {
  */
 exports.delete = function (req, res) {
     //document名称
-    let document_path = req.body.document
+    var document_path = req.body.document
     //find数据
-    let document_find = req.body.find
+    var document_find = req.body.find
     //转换find格式
     var p_obj = {}
     p_obj = util.positionObject(document_find, p_obj, null)
@@ -163,14 +163,14 @@ exports.delete = function (req, res) {
 }
  */
 exports.find = function (req, res) {
-    let document_path = req.body.document
-    let find = req.body.find
-    let show = req.body.show
-    let noshow = req.body.noshow
-    let show_n = _.isEmpty(show) ? 0 : show.length
-    let noshow_n = _.isEmpty(noshow) ? 0 : noshow.length
-    let show_obj = _.zipObject(show, _.fill(Array(show_n), 1))
-    let noshow_obj = _.zipObject(noshow, _.fill(Array(noshow_n), 0))
+    var document_path = req.body.document
+    var find = req.body.find
+    var show = req.body.show
+    var noshow = req.body.noshow
+    var show_n = _.isEmpty(show) ? 0 : show.length
+    var noshow_n = _.isEmpty(noshow) ? 0 : noshow.length
+    var show_obj = _.zipObject(show, _.fill(Array(show_n), 1))
+    var noshow_obj = _.zipObject(noshow, _.fill(Array(noshow_n), 0))
     //存在显示条件
     if (!_.isEmpty(show_obj)) {
         //同时还存在不显示条件,除了仅允许的_id外其他都抛错
@@ -188,8 +188,8 @@ exports.find = function (req, res) {
     })
 }
 exports.getAd = function (req, res) {
-    let document_path = 'ad'
-    let path = req.query.path
+    var document_path = 'ad'
+    var path = req.query.path
     mongoose.connection.db.collection(document_path).find({"path": path}, {_id:0}).toArray().then(doc => {
         return res.api(doc, { code: 0, msg: '查询成功' })
     }).catch(err => {

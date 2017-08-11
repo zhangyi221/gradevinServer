@@ -80,7 +80,7 @@ exports.updatePasswordByStringtoken = function (req, res) {
 		if (!doc) {
 			return res.api_error( { code: code.getErrorCode_name('user_stringtoken_noexist'), msg: code.getErrorMessage_name('user_stringtoken_noexist') })//验证码已经失效或错误
 		}
-		let email = doc.email
+		var email = doc.email
 		const updates = {
 			$set: {
 				password: md5(password)
@@ -122,7 +122,7 @@ exports.update = function (req, res) {
 		doc.save()
 		req.session.user = doc
 		// sending to individual socketid (private message)
-		let msg = JSON.stringify(doc)
+		var msg = JSON.stringify(doc)
 		push.pushMsgToSingleDevice(req.session.user._id.toString(),'user',msg)
   		//io.to(req.session.user._id).emit('private system message','123123');
 		//res.io.sendSysMessange(req.session.user._id,'123123')
