@@ -33,7 +33,7 @@ exports.errorinfo
  * @param code 错误码
 */
 exports.getErrorMessage_code = function (code) {
-    for (let value in this.errorinfo) {
+    for (var value in this.errorinfo) {
         if (code == this.errorinfo[value].code) {
             return this.errorinfo[value].message_trans;
         }
@@ -45,7 +45,7 @@ exports.getErrorMessage_code = function (code) {
  * @param errorname 错误名
 */
 exports.getErrorCode_name = function (errorname) {
-    for (let value in errorinfo) {
+    for (var value in errorinfo) {
         if (errorname == errorinfo[value].errorname) {
             return errorinfo[value].code;
         }
@@ -57,7 +57,7 @@ exports.getErrorCode_name = function (errorname) {
  * @param errorname 错误名
 */
 exports.getErrorMessage_name = function (errorname) {
-    for (let value in errorinfo) {
+    for (var value in errorinfo) {
         if (errorname == errorinfo[value].errorname) {
             return errorinfo[value].message_trans;
         }

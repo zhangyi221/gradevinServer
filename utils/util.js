@@ -64,7 +64,7 @@ exports.clone = function (obj) {
     }
  */
 exports.objectToScheam_default = function (obj) {
-    for (let obj_sub in obj) {
+    for (var obj_sub in obj) {
         if (typeof (obj[obj_sub]) == "object") {
             this.objectToScheam_default(obj[obj_sub])
         } else {
@@ -84,7 +84,7 @@ exports.objectToScheam_default = function (obj) {
  * @return {对象} obj 
  */
 exports.object_eval = function (obj) {
-    for (let obj_sub in obj) {
+    for (var obj_sub in obj) {
         if (typeof (obj[obj_sub]) == "object") {
             this.object_eval(obj[obj_sub])
         } else {
@@ -103,7 +103,7 @@ exports.object_eval = function (obj) {
 */
 exports.objectToScheam_custom = function (scheam_type_default, scheam_type_custom) {
 
-    for (let type_name in scheam_type_custom) {
+    for (var type_name in scheam_type_custom) {
         //查找被替换的默认格式中是否存在
         if (scheam_type_default[type_name] !== null) {
             //存在
@@ -141,11 +141,11 @@ exports.objectToScheam_custom = function (scheam_type_default, scheam_type_custo
  * @return 目标对象
  */
 exports.positionObject = function (obj, p_obj, up_postion) {
-    for (let obj_sub in obj) {
+    for (var obj_sub in obj) {
         //子节点的属性名称是否有操作符$,如果有将此节点作为操作属性不再递归
-        let isOptionElement = false
+        var isOptionElement = false
         if (typeof (obj[obj_sub]) == "object") {
-            for (let element_name in obj[obj_sub]) {
+            for (var element_name in obj[obj_sub]) {
                 if (_.startsWith(element_name, '$')) isOptionElement = true
             }
         }
@@ -162,7 +162,7 @@ exports.positionObject = function (obj, p_obj, up_postion) {
 
         } else {
             if (!_.isEmpty(up_postion)) {
-                let obj_newname = up_postion + '.' + obj_sub
+                var obj_newname = up_postion + '.' + obj_sub
                 p_obj[obj_newname] = obj[obj_sub]
             } else {
                 p_obj[obj_sub] = obj[obj_sub]
@@ -180,7 +180,7 @@ exports.positionObject = function (obj, p_obj, up_postion) {
  * @return 目标对象
  */
 exports.setSessionUserInfo = function (req, doc) {
-    let user_obj = {}
+    var user_obj = {}
     Object.assign(user_obj, {
         _id: doc._id.toString(),
         displayName: doc.displayName,
@@ -205,12 +205,12 @@ exports.setSessionUserInfo = function (req, doc) {
  * @return {png,jpg,other}type
  */
 exports.getImageType = function (image_hex) {
-    let type = 'other'
-    let png_16 = '89504e47'//4字节
-    let jpg_16 = 'ffd8ff'//3字节
-    let gif_16 = '47494638'//4字节
-    let png_base64 = 'iVBORw0KGgoAAAAN'
-    let jpg_base64 = '/9j/4AAQSkZJRgAB'
+    var type = 'other'
+    var png_16 = '89504e47'//4字节
+    var jpg_16 = 'ffd8ff'//3字节
+    var gif_16 = '47494638'//4字节
+    var png_base64 = 'iVBORw0KGgoAAAAN'
+    var jpg_base64 = '/9j/4AAQSkZJRgAB'
 
     if (_.startsWith(image_hex,png_16)) type = 'png'
     if (_.startsWith(image_hex,jpg_16)) type = 'jpg'

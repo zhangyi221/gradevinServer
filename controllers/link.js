@@ -17,7 +17,7 @@ exports.createUserEmail = function (req, res, next) {
 		if (!doc) {
       return res.render('../views/link/createUserEmail', { layout: false, code: code.getErrorCode_name('user_stringtoken_noexist'), msg: code.getErrorMessage_name('user_stringtoken_noexist') })//验证码已经失效或错误
 		}
-		let email = doc.email
+		var email = doc.email
 		const updates = {
 			$set: {
 				activate: '0'

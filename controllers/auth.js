@@ -59,11 +59,11 @@ exports.signInWithEmailAndPassword = function (req, res) {
 exports.signOut = function (req, res) {
 	try {
 		if (req.user) {
-			let userid = req.session.user._id
+			var userid = req.session.user._id
 			//当前采用订阅模式获取的客户端io,无法删除客户端句柄和主动断开
 			//向客户端发送空对象由客户端主动断开
 			push.pushMsgToSingleDevice(req.session.user._id.toString(),'user','')
-			let token = tokenUtil.getToken(req)
+			var token = tokenUtil.getToken(req)
 			redis.redisClient.del('tokenid:'+token, function (err, reply) { 
 				console.log('删除redis中token数据['+reply+']：');// 删除成功，返回1，否则返回0(对于不存在的键进行删除操作，同样返回0) 
 			}); 

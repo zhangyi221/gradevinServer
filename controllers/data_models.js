@@ -18,10 +18,10 @@ var dynamic = require('../models/dynamic')
  */
 exports.save = function (req, res) {
     //document名称
-    let document_path = req.body.document
+    var document_path = req.body.document
     //document数据
-    let document_data = req.body.data
-    let model = dynamic.generateModel(req)
+    var document_data = req.body.data
+    var model = dynamic.generateModel(req)
     if (_.isEmpty(model)){
         return res.api_error( { code: code.getErrorCode_name('data_model_null'), msg: code.getErrorMessage_name('data_model_null') })//生成Model错误，请检查请求参数格式
     }
@@ -44,13 +44,13 @@ exports.save = function (req, res) {
  */
 exports.findandupdate = function (req, res) {
     //document名称
-    let document_path = req.body.document
+    var document_path = req.body.document
     //find数据
-    let document_find = req.body.find
+    var document_find = req.body.find
     //update数据
-    let document_update = req.body.update
+    var document_update = req.body.update
  
-    let model = dynamic.generateModel(req)
+    var model = dynamic.generateModel(req)
     if (_.isEmpty(model)){
         return res.api_error( { code: code.getErrorCode_name('data_model_null'), msg: code.getErrorMessage_name('data_model_null') })//生成Model错误，请检查请求参数格式
     }
@@ -85,11 +85,11 @@ exports.findandupdate = function (req, res) {
  */
 exports.delete = function (req, res) {
     //document名称
-    let document_path = req.body.document
+    var document_path = req.body.document
     //find数据
-    let document_find = req.body.find
+    var document_find = req.body.find
  
-    let model = dynamic.generateModel(req)
+    var model = dynamic.generateModel(req)
     if (_.isEmpty(model)){
         return res.api_error( { code: code.getErrorCode_name('data_model_null'), msg: code.getErrorMessage_name('data_model_null') })//生成Model错误，请检查请求参数格式
     }

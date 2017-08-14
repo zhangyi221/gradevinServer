@@ -88,26 +88,26 @@ var util = require('../utils/util')
 
 exports.generateModel = function (req) {
     //document名称
-    let document_path = req.body.document
+    var document_path = req.body.document
     //数据库操作类型
-    let document_operation = req.body.operation
+    var document_operation = req.body.operation
     //document数据
-    let document_data = req.body.data
+    var document_data = req.body.data
     //自定义数据格式
-    let scheam_type_custom = req.body.document_type
+    var scheam_type_custom = req.body.document_type
     //find数据
-    let document_find = req.body.find
+    var document_find = req.body.find
     //update数据
-    let document_update = req.body.update
+    var document_update = req.body.update
     //对象合并,用于生成更新数据的数据模型
-    let document_merge = _.merge(util.clone(document_update), util.clone(document_find))
+    var document_merge = _.merge(util.clone(document_update), util.clone(document_find))
     // console.log('document名称 = ' , document_path)
     // console.log('数据find = ' , document_find)
     // console.log('数据update = ' , document_update)
     // console.log('数据 = ' , document_data)
     // console.log('自定义类型 = ' , scheam_type_custom)
     //判断数据库操作类型,来生成对用的基础数据类型
-    let scheam_type
+    var scheam_type
     switch (document_operation) {
         case 'save':
             scheam_type = util.objectToScheam_default(util.clone(document_data))
@@ -132,7 +132,7 @@ exports.generateModel = function (req) {
     scheam_type = util.object_eval(scheam_type)
     // console.log('最终结果 = ' , scheam_type)
     
-    let Schema = mongoose.Schema(scheam_type,{ collection: document_path})
+    var Schema = mongoose.Schema(scheam_type,{ collection: document_path})
     Schema.add({ updated_at: Date, created_at: Date })
     
     Schema.pre('save', function (next) {
