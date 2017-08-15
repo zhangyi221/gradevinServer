@@ -4,7 +4,8 @@ FROM node
 MAINTAINER Zhangyi <yid@163.com>
 
 RUN mkdir -p /home/project
-
+RUN ls
+RUN pwd
 ENV NODE_ENV production
 #安装依赖
 COPY package.json /home/projec/
