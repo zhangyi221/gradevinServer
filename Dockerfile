@@ -9,4 +9,5 @@ COPY . /home/project
 RUN npm install
 #映射到宿主机器的端口
 EXPOSE 3000
-CMD ["pm2","start", "./bin/www","--no-daemon"]
+CMD ["npm","start"]
+#CMD ["pm2","start", "./bin/www","--no-daemon"]
