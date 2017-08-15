@@ -2,9 +2,10 @@
 FROM node
 #镜像创建者信息
 MAINTAINER Zhangyi <yid@163.com>
-#切换目录(CD)
+
 RUN mkdir -p /home/project
-WORKDIR /home/project
+
+ENV NODE_ENV production
 #安装依赖
 COPY package.json /home/projec/
 RUN npm install
