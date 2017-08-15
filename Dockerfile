@@ -9,6 +9,6 @@ WORKDIR /home/project
 COPY . /home/project
 RUN npm install
 #映射到宿主机器的端口
-EXPOSE 3000
+EXPOSE 8000
 CMD ["npm","start"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
