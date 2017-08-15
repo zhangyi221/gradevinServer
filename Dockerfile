@@ -3,6 +3,7 @@ FROM node
 #镜像创建者信息
 MAINTAINER Zhangyi <yid@163.com>
 #切换目录(CD)
+RUN mkdir -p /home/project
 WORKDIR /home/project
 #将当期目录全部保存到工作目录
 COPY . /home/project
