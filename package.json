@@ -9,6 +9,7 @@
     "bluebird": "^3.5.0",
     "blueimp-md5": "^2.7.0",
     "body-parser": "~1.17.1",
+    "commander": "^2.11.0",
     "connect": "^2.0.3",
     "connect-redis": "^3.3.0",
     "cookie-parser": "^1.4.3",
