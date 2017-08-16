@@ -11,7 +11,7 @@ RUN npm install
 #RUN npm install express -gd -save
 #RUN npm install express-generator -gd -save
 #RUN npm install ejs -gd -save
-RUN npm install pm2 -gd -save
+#RUN npm install pm2 -gd -save
 RUN node -v 
 RUN express --version
 #将当期目录全部保存到工作目录
