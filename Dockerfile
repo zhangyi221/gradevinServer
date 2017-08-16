@@ -20,7 +20,7 @@ COPY . /home/project/
 RUN npm install
 #映射到宿主机器的端口
 EXPOSE 8000
-EXPOSE 8080
+
 #CMD ["node","./bin/www"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
 CMD /bin/bash /home/project/docker_start.sh $NODE_ENV
