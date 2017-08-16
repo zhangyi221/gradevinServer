@@ -7,6 +7,7 @@ WORKDIR /home/project
 #RUN rm -rf node_modules
 ENV NODE_ENV production
 #安装依赖
+
 COPY package.json /home/projec/
 #RUN npm install express -gd -save
 #RUN npm install express-generator -gd -save
