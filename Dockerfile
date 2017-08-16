@@ -19,10 +19,7 @@ RUN express --version
 COPY . /home/project/
 RUN npm install
 #自定义pm2-web端口配置文件
-WORKDIR /home
-RUN ls -la
-WORKDIR /home/project
-#RUN cp /home/project/pm2-web-config.json /etc/pm2-web/config.json
+RUN cp /home/project/pm2-web-config.json /home/node/.config/pm2-web/config.json
 #映射到宿主机器的端口
 EXPOSE 8000
 EXPOSE 8001
