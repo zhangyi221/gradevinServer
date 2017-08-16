@@ -23,4 +23,4 @@ RUN npm install
 CMD /bin/bash /home/project/docker_start.sh
 #映射到宿主机器的端口
 EXPOSE 8000
-EXPOSE 9615
+EXPOSE 8001
