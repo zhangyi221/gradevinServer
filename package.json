@@ -21,6 +21,7 @@
     "express-session": "^1.15.3",
     "express-unless": "^0.3.0",
     "file-stream-rotator": "^0.1.0",
+    "glob": "^7.1.2",
     "hbs": "^4.0.1",
     "jade": "~1.11.0",
     "jsonwebtoken": "^7.4.2",
