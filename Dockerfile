@@ -18,12 +18,9 @@ RUN express --version
 #将当期目录全部保存到工作目录
 COPY . /home/project/
 RUN npm install
-#自定义pm2-web端口配置文件
-RUN mkdir -p /home/node/.config/pm2-web
-RUN cp /home/project/pm2-web-config.json /home/node/.config/pm2-web/config.json
 #映射到宿主机器的端口
 EXPOSE 8000
-EXPOSE 8001
+EXPOSE 9000
 #CMD ["node","./bin/www"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
 RUN ["chmod", "+x", "/home/project/docker_start.sh"]
