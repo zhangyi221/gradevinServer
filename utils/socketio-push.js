@@ -10,5 +10,6 @@ function onError(err){
   console.log("ignoring exception: " + err);
 }
 exports.pushMsgToSingleDevice = function (uid,roomID, msg) {
-    ioEmitter.to(uid).in(roomID).emit('private system message', msg);
+  console.log('向用户'+uid+'发送状态变化消息' + msg);
+  ioEmitter.to(uid).in(roomID).emit('private system message', msg);
 }
