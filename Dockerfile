@@ -17,9 +17,9 @@ RUN node -v
 RUN express --version
 #将当期目录全部保存到工作目录
 COPY . /home/project/
-#映射到宿主机器的端口
-EXPOSE 8000
-EXPOSE 9615
 #CMD ["node","./bin/www"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
 CMD /bin/bash /home/project/docker_start.sh
+#映射到宿主机器的端口
+EXPOSE 8000
+EXPOSE 9615
