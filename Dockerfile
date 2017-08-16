@@ -8,11 +8,11 @@ RUN ls
 RUN pwd
 ENV NODE_ENV production
 #安装依赖
-COPY package.json /home/projec/
+COPY /home/ubuntu/docker_node/package.json /home/projec/
 RUN npm install
 
 #将当期目录全部保存到工作目录
-COPY . /home/project/
+COPY /home/ubuntu/docker_node/ /home/project/
 
 #映射到宿主机器的端口
 EXPOSE 8000
