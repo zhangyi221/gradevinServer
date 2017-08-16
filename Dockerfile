@@ -9,7 +9,7 @@ RUN pwd
 ENV NODE_ENV production
 #安装依赖
 COPY package.json /home/projec/
-RUN npm install
+RUN npm install -g
 
 #将当期目录全部保存到工作目录
 COPY . /home/project/
