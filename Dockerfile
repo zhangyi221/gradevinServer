@@ -8,11 +8,11 @@ WORKDIR /home/project
 ENV NODE_ENV production
 #安装依赖
 COPY package.json /home/projec/
-RUN npm install express -gd -save
-RUN npm install express-generator -gd -save
-RUN npm install pm2 -gd -save
-RUN npm config set unsafe-perm true
-RUN npm install pm2-web -gd -save
+#RUN npm install express -gd -save
+#RUN npm install express-generator -gd -save
+#RUN npm install pm2 -gd -save
+#RUN npm config set unsafe-perm true
+#RUN npm install pm2-web -gd -save
 RUN npm install
 RUN node -v 
 RUN express --version
