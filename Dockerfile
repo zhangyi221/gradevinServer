@@ -19,4 +19,4 @@ COPY . /home/project/
 EXPOSE 8000
 #CMD ["node","./bin/www"]
 CMD ["pm2","start", "./bin/www -i 2"]
-CMD ["pm2","start","pm2-web"]
+#CMD ["pm2","start","pm2-web"]
