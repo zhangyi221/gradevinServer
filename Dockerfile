@@ -3,7 +3,7 @@ FROM node
 #镜像创建者信息
 MAINTAINER Zhangyi <yid@163.com>
 RUN mkdir -p /home/project
-RUN rm -rf node_modules
+#RUN rm -rf node_modules
 RUN ls
 RUN pwd
 ENV NODE_ENV production
@@ -18,8 +18,8 @@ RUN node -v
 RUN express --version
 #将当期目录全部保存到工作目录
 COPY . /home/project/
-
 #映射到宿主机器的端口
 EXPOSE 8000
-CMD ["node","./bin/www"]
+#CMD ["node","./bin/www"]
+CMD ["npm","start"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
