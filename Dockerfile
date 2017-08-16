@@ -11,7 +11,7 @@ ENV NODE_ENV production
 COPY package.json /home/projec/
 RUN npm install -save
 
-RUN npm install commander -gd -save
+
 
 RUN node -v 
 RUN express --version
