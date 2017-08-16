@@ -21,5 +21,5 @@ COPY . /home/project/
 
 #映射到宿主机器的端口
 EXPOSE 8000
-CMD ["npm","start"]
+CMD ["node","./bin/www"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
