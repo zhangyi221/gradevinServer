@@ -9,7 +9,7 @@ RUN pwd
 ENV NODE_ENV production
 #安装依赖
 COPY package.json /home/projec/
-RUN npm install -d -save
+RUN npm install -gd -save
 RUN npm install express -gd -save
 RUN npm install express-generator -gd -save
 
