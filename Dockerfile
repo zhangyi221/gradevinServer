@@ -11,7 +11,8 @@ COPY package.json /home/projec/
 RUN npm install
 #RUN npm install express -gd -save
 #RUN npm install express-generator -gd -save
-#RUN npm install pm2 -gd -save
+#RUN npm install pm2 -gd -
+
 RUN npm config set unsafe-perm true
 RUN npm install pm2-web -gd -save
 RUN node -v 
