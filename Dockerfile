@@ -13,11 +13,11 @@ COPY package.json /home/projec/
 #RUN npm install pm2 -gd -save
 #RUN npm config set unsafe-perm true
 #RUN npm install pm2-web -gd -save
-RUN npm install
 RUN node -v 
 RUN express --version
 #将当期目录全部保存到工作目录
 COPY . /home/project/
+RUN npm install
 #CMD ["node","./bin/www"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
 CMD /bin/bash /home/project/docker_start.sh
