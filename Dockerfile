@@ -23,4 +23,5 @@ EXPOSE 8000
 
 #CMD ["node","./bin/www"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
+RUN ["chmod", "+x", "/home/project/docker_start.sh"]
 CMD /bin/bash /home/project/docker_start.sh $NODE_ENV
