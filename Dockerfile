@@ -9,12 +9,17 @@ RUN pwd
 ENV NODE_ENV production
 #安装依赖
 COPY package.json /home/projec/
+RUN npm install express -gd -save
+RUN npm install express-generator -gd -save
 RUN npm install -g
+
+RUN node -v 
+RUN express --version
 
 #将当期目录全部保存到工作目录
 COPY . /home/project/
 
 #映射到宿主机器的端口
 EXPOSE 8000
-CMD ["npm","./bin/www"]
+CMD ["npm","start"]
 #CMD ["pm2","start", "./bin/www","--no-daemon"]
