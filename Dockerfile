@@ -9,10 +9,10 @@ RUN pwd
 ENV NODE_ENV production
 #安装依赖
 COPY package.json /home/projec/
+RUN npm install -save
 RUN npm install express -gd -save
 RUN npm install express-generator -gd -save
 RUN npm install ejs -gd -save
-RUN npm install -save
 
 #将当期目录全部保存到工作目录
 COPY . /home/project/
