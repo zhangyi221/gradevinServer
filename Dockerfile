@@ -3,7 +3,7 @@ FROM node
 #镜像创建者信息
 MAINTAINER Zhangyi <yid@163.com>
 RUN mkdir -p /home/project
-#RUN rm -rf node_modules
+RUN rm -rf node_modules
 RUN ls
 RUN pwd
 ENV NODE_ENV production
