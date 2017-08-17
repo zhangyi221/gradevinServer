@@ -75,11 +75,11 @@ sudo docker run -d --name jenkins_node -p 8080:8080 -p 50000:50000 -v /var/jenki
 
 #将项目安装在PM2中，并使用enkins的可持续集成方法（简单）
 jenkins构建环境脚本
-pm2 stop www \
-    && cd /var/jenkins_node/workspace/node \
-    && cp -p -rf /var/jenkins_node/workspace/node/* /home/ubuntu/gradevinServer \
-    && cd /home/ubuntu/gradevinServer \
-    && npm install -save \
+pm2 stop www || true \
+    && cd /var/jenkins_node/workspace/node || true \
+    && cp -p -rf /var/jenkins_node/workspace/node/* /home/ubuntu/gradevinServer || true \
+    && cd /home/ubuntu/gradevinServer || true \
+    && npm install -save || true \
     && pm2 restart www
 
 注：其他jenkins建立用户，安装Publish Over SSH插件，配置与服务器rsa认证，创建项目等其他操作请参考网络上的攻略
