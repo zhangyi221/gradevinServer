@@ -80,7 +80,7 @@ cd /var/jenkins_node/workspace/node \
 cp -p -rf /var/jenkins_node/workspace/node/* /home/ubuntu/gradevinServer \
 cd /home/ubuntu/gradevinServer \
 npm install -save \
-pm2 start ./bin/www
+pm2 restart www
 
 注：其他jenkins建立用户，安装Publish Over SSH插件，配置与服务器rsa认证，创建项目等其他操作请参考网络上的攻略
 推荐看下http://www.jianshu.com/p/052a2401595a
