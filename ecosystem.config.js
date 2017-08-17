@@ -3,7 +3,7 @@
         "apps":
         [{
             "name": "www",
-            "script": "./bin/www",
+            "script": "./bin/www --no-daemon",
             "env": {
                 "NODE_ENV": "production"
             },
