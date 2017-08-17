@@ -1,5 +1,5 @@
 #!/bin/sh
 NODE_ENV=$1
 echo $NODE_ENV
-pm2 start ./bin/www --env $NODE_ENV 
-pm2-web  --no-daemon
+#pm2 start ./bin/www --env $NODE_ENV 
+pm2 start ecosystem.config.js
