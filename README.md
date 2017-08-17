@@ -75,7 +75,9 @@ sudo docker run -d --name jenkins_node -p 8080:8080 -p 50000:50000 -v /var/jenki
 
 #将项目安装在PM2中，并使用enkins的可持续集成方法（简单）
 jenkins构建环境脚本
-pm2 stop www || true \
+export PATH=/usr/local/nodejs/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin || true \
+    && echo $PATH
+    && pm2 stop www || true \
     && cd /var/jenkins_node/workspace/node || true \
     && cp -p -rf /var/jenkins_node/workspace/node/* /home/ubuntu/gradevinServer || true \
     && cd /home/ubuntu/gradevinServer || true \
