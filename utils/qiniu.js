@@ -18,8 +18,8 @@ var accessKey = 'jNrjnDx1PNcmcv_IznqUNqct1KIqOFdKwwqcVzcI'
 var secretKey = 'sCDZU5sBjyoQeSb2LQadvqoHSLsrcxKeFmG1DK0P'
 var mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
 var config = new qiniu.conf.Config()
-var link = 'http://oriku7msr.bkt.clouddn.com/'
-config.zone = qiniu.zone.Zone_z1
+var link = 'http://ouvfldqqf.bkt.gdipper.com/'
+config.zone = qiniu.zone.Zone_na0
 var bucket = 'hussar'
 var options = {
   scope: bucket
