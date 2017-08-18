@@ -6,7 +6,7 @@ module.exports = {
   // EMAIL_PASS: 'zymailer',
   SERVICE: '163',
   EMAIL_USER: 'zymailers@163.com',
-  EMAIL_PASS: 'zy0123456789',
+  EMAIL_PASS: 'zy1234567890',
   EMAIL_SECURE: true,//使用TLS true
 
   //修改密码配置
