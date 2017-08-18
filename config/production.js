@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-  host: 'http://localhost',
+  host: 'http://52.15.171.130',
   port: 8000,
   logging: {
     type: 'combined' // Standard Apache combined log output
