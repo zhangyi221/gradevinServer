@@ -1,17 +1,17 @@
 var config = require('../config/' + process.env.NODE_ENV)
 
 module.exports = {
-  // SERVICE: 'Gmail',
-  // EMAIL_USER: 'zymailers@gmail.com',
-  // EMAIL_PASS: 'zymailer',
-  SERVICE: '163',
-  EMAIL_USER: 'zymailers@163.com',
-  EMAIL_PASS: 'zy1234567890',
-  EMAIL_SECURE: true,//使用TLS true
+  SERVICE: 'Gmail',
+  EMAIL_USER: 'zymailers@gmail.com',
+  EMAIL_PASS: 'zymailer',
+  // SERVICE: '163',
+  // EMAIL_USER: 'zymailers@163.com',
+  // EMAIL_PASS: 'zy1234567890',
+  // EMAIL_SECURE: true,//使用TLS true
 
   //修改密码配置
   resetpass_message: {
-    from: 'gradevin,<zymailers@163.com>', // 发件箱
+    from: 'gradevin,<zymailers@gmail.com>', // 发件箱
     to: '',//收件箱
     subject: '感谢您使用，请继续完成操作',//标题
     headers: { 'X-Laziness-level': 1000 },//自定义标头
@@ -23,7 +23,7 @@ module.exports = {
   },
   //注册激活配置
   sign_message: {
-    from: 'gradevin,<zymailers@163.com>', // 发件箱
+    from: 'gradevin,<zymailers@gmail.com>', // 发件箱
     to: '',//收件箱
     subject: '123123',//标题
     headers: { 'X-Laziness-level': 1000 },//自定义标头

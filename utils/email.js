@@ -3,25 +3,25 @@ var config = require('../config/email')
 
 // Create a SMTP transporter object
 //Gmail
-// var transporter = nodemailer.createTransport( {
-//   // host: config.EMAIL_HOST,
-//   // port: config.EMAIL_PORT,
-//   service: config.SERVICE,
-//   auth: {
-//     user: config.EMAIL_USER,
-//     pass: config.EMAIL_PASS
-//   },
-//   // debug: true
-// });
-var transporter = nodemailer.createTransport({
-    host: "smtp.163.com",
-    secure: true,
-    port:465,
-    auth: {
-        user: config.EMAIL_USER,
-        pass: config.EMAIL_PASS,
-    }
+var transporter = nodemailer.createTransport( {
+  // host: config.EMAIL_HOST,
+  // port: config.EMAIL_PORT,
+  service: config.SERVICE,
+  auth: {
+    user: config.EMAIL_USER,
+    pass: config.EMAIL_PASS
+  },
+  // debug: true
 });
+// var transporter = nodemailer.createTransport({
+//     host: "smtp.163.com",
+//     secure: true,
+//     port:465,
+//     auth: {
+//         user: config.EMAIL_USER,
+//         pass: config.EMAIL_PASS,
+//     }
+// });
 
 // verify connection configuration
 transporter.verify(function(error, success) {
