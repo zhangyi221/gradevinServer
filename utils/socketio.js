@@ -9,7 +9,7 @@ module.exports = function (io) {
     io.of('/').adapter.on('error', function(){});
     
     io.on('connection', function (socket) {
-        console.log('用户上线监听房间')
+        console.log('用户上线')
         var token = socket.handshake.query.token
         var roomID = socket.handshake.query.state//房间ID,这里我们将房间定义为需要监听的状态
         var user_id = ''
@@ -50,21 +50,13 @@ module.exports = function (io) {
             }
         });
 
-        // 接收用户消息,发送相应的房间
-        socket.on('message', function (msg) {
-            // 验证如果用户不在房间内则不给发送
-            if (roomInfo[roomID].indexOf(user) === -1) {
-                return false;
-            }
-            io.to(roomID).emit('msg', user, msg);
-        });
-        //发送
-        socket.on('message', function (msg) {
-            // 验证如果用户不在房间内则不给发送
-            if (roomInfo[roomID].indexOf(user) === -1) {
-                return false;
-            }
-            io.to(roomID).emit('msg', user, msg);
-        });
+        // // 接收用户消息,发送相应的房间
+        // socket.on('message', function (msg) {
+        //     // 验证如果用户不在房间内则不给发送
+        //     if (roomInfo[roomID].indexOf(user) === -1) {
+        //         return false;
+        //     }
+        //     io.to(roomID).emit('msg', user, msg);
+        // });
     })
 }
