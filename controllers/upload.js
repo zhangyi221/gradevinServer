@@ -78,6 +78,9 @@ exports.uploadImg64Qn = function (req, res) {
             return res.api_error({ code: respErr.code, msg: respErr.message })
         }
         if (respInfo.statusCode == 200) {
+            //先添加且返回结果
+            uploadQN(url, dataBuffer, res)
+            //异步删除
             var items = respBody.items;
             if (items.length > 0) {
                 //删除再添加
@@ -88,28 +91,19 @@ exports.uploadImg64Qn = function (req, res) {
                 //删除指定文件
                 bucketManager.batch(deleteOperations, function (respErr, respBody, respInfo) {
                     if (respErr) {
-                        return res.api_error({ code: respErr.code, msg: respErr.message })
+                        console.log('删除头像异常'+respErr.code , respErr.message )
+                        //return res.api_error({ code: respErr.code, msg: respErr.message })
                     } else {
                         // 200 is success, 298 is part success
                         if (parseInt(respInfo.statusCode / 100) == 2) {
-                            // respBody.forEach(function (item) {
-                            //     if (item.code == 200) {
-                            //         console.log(item.code + "\tsuccess");
-                            //     } else {
-                            //         console.log(item.code + "\t" + item.data.error);
-                            //     }
-                            // });
-
-                            uploadQN(url, dataBuffer, res)
+                            //uploadQN(url, dataBuffer, res)
                         } else {
-                            return res.api_error({ code: respInfo.statusCode, msg: respInfo.data.error })
+                            console.log('删除头像异常'+respInfo.statusCode , respInfo.data.error )
+                            //return res.api_error({ code: respInfo.statusCode, msg: respInfo.data.error })
                         }
                     }
                 })
-            } else {
-                //直接添加
-                uploadQN(url, dataBuffer, res)
-            }
+            } 
         } else {
             return res.api_error({ code: respInfo.statusCode, msg: respInfo.data.error })
         }
