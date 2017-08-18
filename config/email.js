@@ -9,11 +9,11 @@ module.exports = {
   EMAIL_PASS: 'zy0123456789',
   EMAIL_SECURE: true,//使用TLS true
 
-  //注册激活配置
+  //修改密码配置
   resetpass_message: {
     from: 'zymailers@163.com', // 发件箱
     to: '',//收件箱
-    subject: '感谢您的使用，请点击激活链接完成重置密码操作',//标题
+    subject: '邀请函，请完成操作',//标题
     headers: { 'X-Laziness-level': 1000 },//自定义标头
     //邮件内容需要替换%replace%
     html: '<p>请点击此链接完成重置密码操作</p>' + 
@@ -21,11 +21,11 @@ module.exports = {
     '<a href='+ config.host + ':' + config.port + '/web/link/passwordResetEmail?stringtoken=${a}>' +
     config.host + ':' + config.port + '/web/link/passwordResetEmail?stringtoken=${a}</a>',
   },
-  //修改密码配置
+  //注册激活配置
   sign_message: {
     from: 'zymailers@163.com', // 发件箱
     to: '',//收件箱
-    subject: '感谢您的使用，请点击激活链接完成激活操作',//标题
+    subject: '邀请函，请完成操作',//标题
     headers: { 'X-Laziness-level': 1000 },//自定义标头
     //邮件内容需要替换%replace%
     html: '<p>请点击此链接完成激活操作</p>' + 
