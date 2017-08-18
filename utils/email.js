@@ -15,7 +15,7 @@ var config = require('../config/email')
 // });
 var transporter = nodemailer.createTransport({
     host: "smtp.163.com",
-    secureConnection: true,
+    secure: true,
     port:465,
     auth: {
         user: config.EMAIL_USER,
