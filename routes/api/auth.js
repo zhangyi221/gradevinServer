@@ -6,6 +6,8 @@ var router = express.Router()
 
 // 以邮箱和密码的方式登录
 router.post('/signInWithEmailAndPassword', auth_ctrl.signInWithEmailAndPassword)
+// 以手机号码快速登录
+router.post('/signInWithPhone', auth_ctrl.signInWithPhone)
 // 新增用户
 router.post('/createUserWithEmailAndPassword', auth_ctrl.createUserWithEmailAndPassword)
 // 通过邮箱重置密码

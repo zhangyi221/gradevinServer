@@ -92,6 +92,35 @@
                 }
             }
         },
+        "/api/auth/signInWithPhone": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "使用邮箱和密码注册",
+                "description": "",
+                "operationId": "signInWithPhone",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created signInWithPhone object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/smsValid_data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/auth/createUserWithEmailAndPassword": {
             "post": {
                 "tags": [
@@ -466,6 +495,66 @@
                 }
             }
         },
+        "/api/utils/sendSMS": {
+            "post": {
+                "tags": [
+                    "utils"
+                ],
+                "summary": "发送短信",
+                "description": "发送短信",
+                "operationId": "sendSMS",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "sendSMS object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/sendSMS_data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/utils/smsValidTest": {
+            "post": {
+                "tags": [
+                    "utils"
+                ],
+                "summary": "验证短信",
+                "description": "验证短信",
+                "operationId": "smsValidTest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "smsValidTest object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/smsValidTest_data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/data/data/save": {
             "post": {
                 "tags": [
@@ -763,6 +852,22 @@
                 "name": "SingUp_Email_Data"
             }
         },
+        "smsValid_data": {
+            "type": "object",
+            "properties": {
+                "phone": {
+                    "type": "string",
+                    "example": "13552655560"
+                },
+                "verification": {
+                    "type": "string",
+                    "example": "123456"
+                }
+            },
+            "xml": {
+                "name": "smsValid_data"
+            }
+        },
         "SendPasswordResetEmail_Email_Data": {
             "type": "object",
             "properties": {
@@ -804,6 +909,39 @@
             },
             "xml": {
                 "name": "UpdatePasswordByStringtoken_Data"
+            }
+        },
+
+        "sendSMS_data": {
+            "type": "object",
+            "properties": {
+                "mobile": {
+                    "type": "string",
+                    "example": "13552655560"
+                },
+                "temp_id": {
+                    "type": "string",
+                    "example": "1"
+                }
+            },
+            "xml": {
+                "name": "sendSMS_data"
+            }
+        },
+        "smsValidTest_data": {
+            "type": "object",
+            "properties": {
+                "verification": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "msg_id": {
+                    "type": "string",
+                    "example": "1111111111"
+                }
+            },
+            "xml": {
+                "name": "smsValidTest_data"
             }
         },
         "test_data_save": {

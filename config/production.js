@@ -27,6 +27,7 @@ module.exports = {
     /^\/images/,//图片
     /^\/uploads/,//上传图片
     /^\/api\/auth\/signInWithEmailAndPassword/,//登录
+    /^\/api\/auth\/signInWithPhone/,//手机号登录
     /^\/api\/auth\/sendPasswordResetEmail/,//通过邮箱重置密码
     /^\/api\/auth\/createUserWithEmailAndPassword/,//客户注册
     /^\/api\/auth\/resendStringTokenByEmail/,//重发邮件

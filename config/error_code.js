@@ -16,11 +16,17 @@ var errorinfo =  [
     { errorfrom: 'server', errorname: 'auth_token_noexist', code: '10010', enmessage_from: '', cnmessage_from: '', message_trans: 'token已经失效或不存在' },
     { errorfrom: 'server', errorname: 'auth_email_activate_not', code: '10011', enmessage_from: '', cnmessage_from: '', message_trans: '用户尚未邮件激活，请激活后重新尝试' },
     { errorfrom: 'server', errorname: 'auth_captcha_err', code: '10012', enmessage_from: '', cnmessage_from: '', message_trans: '请正确输入验证码' },
+    { errorfrom: 'server', errorname: 'auth_phone_null', code: '10013', enmessage_from: '', cnmessage_from: '', message_trans: '手机号不能为空' },
+    { errorfrom: 'server', errorname: 'auth_verification_null', code: '10014', enmessage_from: '', cnmessage_from: '', message_trans: '短信验证码不能为空' },
+    { errorfrom: 'server', errorname: 'auth_verification_err', code: '10015', enmessage_from: '', cnmessage_from: '', message_trans: '短信验证码错误' },
+    { errorfrom: 'server', errorname: 'auth_phone_noexist', code: '10016', enmessage_from: '', cnmessage_from: '', message_trans: '该手机号尚未注册或绑定' },
+    
     { errorfrom: 'server', errorname: 'user_uid_Valid', code: '10101', enmessage_from: '', cnmessage_from: '', message_trans: '输入的UID不合法' },
     { errorfrom: 'server', errorname: 'user_params_null', code: '10102', enmessage_from: '', cnmessage_from: '', message_trans: '输入的参数不能为空' },
     { errorfrom: 'server', errorname: 'user_stringtoken_noexist', code: '10103', enmessage_from: '', cnmessage_from: '', message_trans: '验证码已经失效或错误' },
     { errorfrom: 'server', errorname: 'user_pass_null', code: '10104', enmessage_from: '', cnmessage_from: '', message_trans: '密码不能为空' },
     { errorfrom: 'server', errorname: 'user_session_null', code: '10105', enmessage_from: '', cnmessage_from: '', message_trans: 'session失效' },
+
     { errorfrom: 'server', errorname: 'data_model_null', code: '10201', enmessage_from: '', cnmessage_from: '', message_trans: '生成Model错误，请检查请求参数格式' },
     { errorfrom: 'server', errorname: 'data_find_position', code: '10202', enmessage_from: '', cnmessage_from: '', message_trans: 'find参数数据格式错误' },
     { errorfrom: 'server', errorname: 'data_Projection_err', code: '10203', enmessage_from: '', cnmessage_from: '', message_trans: '显示参数设置异常' }
