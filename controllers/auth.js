@@ -87,7 +87,7 @@ exports.createUserIsUsedByPhone = function (req, res) {
 	let phone = req.query.phone//手机号
 	//判断输入参数
 	if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
-	Auth.findOneAsync({ phone: phone },'-password -__v').then(doc => {
+	Auth.findOneAsync({ phone: phone }).then(doc => {
 		if (doc) {
 			//该手机号已经注册或绑定
 			return res.api_error({ code: code.getErrorCode_name('auth_phone_exist'), msg: code.getErrorMessage_name('auth_phone_exist') })
