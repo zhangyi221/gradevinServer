@@ -80,6 +80,24 @@ exports.signInWithPhone = async function (req, res) {
 		return res.api_error({ code: 99999, msg: err.message })
 	})
 }
+/**
+ * 使用手机号码查询是否注册
+ * */
+exports.createUserIsUsedByPhone = function (req, res) {
+	let phone = req.query.phone//手机号
+	//判断输入参数
+	if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
+	Auth.findOneAsync({ phone: phone },'-password -__v').then(doc => {
+		if (doc) {
+			//该手机号已经注册或绑定
+			return res.api_error({ code: code.getErrorCode_name('auth_phone_exist'), msg: code.getErrorMessage_name('auth_phone_exist') })
+		} else {
+			return res.api({ is_userd: false }, { code: 0, msg: '交易成功' })
+		}
+	}).catch(err => {
+		return res.api_error({ code: 99999, msg: err.message })
+	})
+}
 
 /**
  * 用户退出

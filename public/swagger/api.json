@@ -121,6 +121,34 @@
                 }
             }
         },
+        "/api/auth/createUserIsUsedByPhone": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "获取验证码",
+                "description": "获取验证码",
+                "operationId": "captcha",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "手机号",
+                        "required": true,
+                        "type": "string",
+                        "default": "13552655560"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/auth/createUserWithEmailAndPassword": {
             "post": {
                 "tags": [
