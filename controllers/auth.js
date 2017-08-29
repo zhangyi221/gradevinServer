@@ -22,10 +22,12 @@ var _ = require('lodash')
 exports.signInWithEmailAndPassword = function (req, res) {
 	let email = req.body.email
 	let password = req.body.password
+	let captcha_ = req.body.captcha//上传captcha
+	let captcha = req.session.captcha//服务端captcha
 	//邮箱地址或密码不能为空
 	if (!email || !password) return res.api_error({ code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_null') })
 	//验证码验证,以后添加
-	if (!_.isEqual(_.toUpper(req.body.captcha), _.toUpper(req.session.captcha))) {
+	if (!_.isEqual(_.toUpper(captcha_), _.toUpper(captcha))) {
 		//请正确输入验证码
 		return res.api_error({ code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') })
 	}

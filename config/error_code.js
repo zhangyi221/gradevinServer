@@ -15,7 +15,7 @@ var errorinfo =  [
     { errorfrom: 'server', errorname: 'auth_session_noexist', code: '10009', enmessage_from: '', cnmessage_from: '', message_trans: 'session已经失效或不存在' },
     { errorfrom: 'server', errorname: 'auth_token_noexist', code: '10010', enmessage_from: '', cnmessage_from: '', message_trans: 'token已经失效或不存在' },
     { errorfrom: 'server', errorname: 'auth_email_activate_not', code: '10011', enmessage_from: '', cnmessage_from: '', message_trans: '用户尚未邮件激活，请激活后重新尝试' },
-    { errorfrom: 'server', errorname: 'auth_captcha_err', code: '10012', enmessage_from: '', cnmessage_from: '', message_trans: '请正确输入验证码' },
+    { errorfrom: 'server', errorname: 'auth_captcha_err', code: '10012', enmessage_from: '', cnmessage_from: '', message_trans: '验证码错误' },
     { errorfrom: 'server', errorname: 'auth_phone_null', code: '10013', enmessage_from: '', cnmessage_from: '', message_trans: '手机号不能为空' },
     { errorfrom: 'server', errorname: 'auth_verification_null', code: '10014', enmessage_from: '', cnmessage_from: '', message_trans: '短信验证码不能为空' },
     { errorfrom: 'server', errorname: 'auth_verification_err', code: '10015', enmessage_from: '', cnmessage_from: '', message_trans: '短信验证码错误' },
