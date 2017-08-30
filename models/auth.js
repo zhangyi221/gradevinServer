@@ -18,7 +18,7 @@
 * actives,激活状态,0激活,1发送邮件待验证
 */
 var mongoose = require('mongoose');
-var md5 = require('../utils/md5')
+//var md5 = require('../utils/md5')
 
 var config = require('../config/' + process.env.NODE_ENV)
 var MAX_LOGIN_ATTEMPTS = config.MAX_LOGIN_ATTEMPTS
@@ -80,8 +80,8 @@ UserSchema.virtual('isLocked').get(function() {
     return !!(this.lockUntil && this.lockUntil > Date.now())
 })
 UserSchema.methods.comparePassword = function(candidatePassword) {
-
-	return md5(candidatePassword) === this.password
+    return candidatePassword === this.password
+	//return md5(candidatePassword) === this.password
 }
 
 UserSchema.methods.incLoginAttempts = function() {
