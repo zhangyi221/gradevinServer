@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 var URL = require('url');
 var glob = require("glob");
 var svgCaptcha = require('svg-captcha');
