@@ -11,11 +11,8 @@ function onError(err){
 }
 exports.pushMsgToSingleDevice = function (uid,roomID, msg) {
   console.log('向用户'+uid+'发送状态变化消息' + msg);
-  let sendmsg = ''
   if (roomID == 'user') {
-    sendmsg = {
-      'user' : msg
-    }
+    ioEmitter.to(uid).in(roomID).emit('listen user state', msg);
   }
-  ioEmitter.to(uid).in(roomID).emit('private system message', sendmsg);
+  
 }
