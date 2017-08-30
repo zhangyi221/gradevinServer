@@ -181,7 +181,8 @@ exports.createUserWithEmailAndPassword = function (req, res) {
 				new Auth({
 					displayName: displayName,
 					email: email,
-					password: md5(password),
+					//password: md5(password),
+					password: password,
 					isActivate: true,
 					activate: '1'
 				}).save().then(() => {
