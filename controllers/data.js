@@ -187,15 +187,6 @@ exports.find = function (req, res) {
         return res.api_error( { code: 99999, msg: err.message })
     })
 }
-exports.getAd = function (req, res) {
-    var document_path = 'ad'
-    var path = req.query.path
-    mongoose.connection.db.collection(document_path).find({"path": path}, {_id:0}).toArray().then(doc => {
-        return res.api(doc, { code: 0, msg: '查询成功' })
-    }).catch(err => {
-        return res.api_error( { code: 99999, msg: err.message })
-    })
-}
 
 exports.test = function (req, res) {
     return res.api(doc, { code: 0, msg: '成功' })

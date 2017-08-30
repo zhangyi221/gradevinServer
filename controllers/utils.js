@@ -40,6 +40,15 @@ exports.getJpg = function (req, res) {
   }
   return res.api(files, { code: 0, msg: '交易成功' })
 }
+exports.getAd = function (req, res) {
+  var document_path = 'ad'
+  var path = req.query.path
+  mongoose.connection.db.collection(document_path).find({"path": path}, {_id:0}).toArray().then(doc => {
+      return res.api(doc, { code: 0, msg: '查询成功' })
+  }).catch(err => {
+      return res.api_error( { code: 99999, msg: err.message })
+  })
+}
 /**
  * 发送短信
  * @param mobile 手机号

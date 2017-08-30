@@ -31,10 +31,6 @@ router.post('/delete', data_ctrl.delete)
  * 查询操作,直接使用mongodb引用操作数据库
  */
 router.post('/find', data_ctrl.find)
-/**
- * 从数据库获取获取广告信息单独写为了权限控制
- */
-router.get('/getAd', data_ctrl.getAd)
 //test
 router.post('/test', data_ctrl.test)
 

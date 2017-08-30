@@ -445,26 +445,36 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "headers": {
-                            "X-Rate-Limit": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "calls per hour allowed by the user"
-                            },
-                            "X-Expires-After": {
-                                "type": "string",
-                                "format": "date-time",
-                                "description": "date in UTC when token expires"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid username/password supplied"
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/utils/getAd": {
+            "get": {
+                "tags": [
+                    "utils"
+                ],
+                "summary": "获取广告信息",
+                "description": "获取广告信息",
+                "operationId": "getAd",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "description": "路径",
+                        "required": true,
+                        "type": "string",
+                        "default": "images/ad/home/slides/"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
                     }
                 }
             }
@@ -706,34 +716,6 @@
                             "type": "object",
                             "$ref": "#/definitions/test_data_find"
                         }
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/data/data/getAd": {
-            "get": {
-                "tags": [
-                    "data"
-                ],
-                "summary": "获取广告信息",
-                "description": "获取广告信息",
-                "operationId": "getAd",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "path",
-                        "in": "query",
-                        "description": "路径",
-                        "required": true,
-                        "type": "string",
-                        "default": "images/ad/home/slides/"
                     }
                 ],
                 "responses": {
