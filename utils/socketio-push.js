@@ -14,7 +14,7 @@ exports.pushMsgToSingleDevice = function (uid,roomID, msg) {
   let sendmsg = ''
   if (roomID == 'user') {
     sendmsg = {
-      roomID : msg
+      'user' : msg
     }
   }
   ioEmitter.to(uid).in(roomID).emit('private system message', sendmsg);
