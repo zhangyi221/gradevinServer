@@ -29,6 +29,7 @@ module.exports = {
     /^\/api\/auth\/signInWithEmailAndPassword/,//邮箱密码登录
     /^\/api\/auth\/signInWithPhone/,//手机号登录
     /^\/api\/auth\/createUserIsUsedByPhone/,//查询手机号是否被注册
+    /^\/api\/auth\/createUserIsUsedByEmail/,//查询邮箱是否被注册
     /^\/api\/auth\/sendPasswordResetEmail/,//通过邮箱重置密码
     /^\/api\/auth\/createUserWithEmailAndPassword/,//客户注册
     /^\/api\/auth\/resendStringTokenByEmail/,//重发邮件
