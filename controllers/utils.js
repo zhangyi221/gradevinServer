@@ -103,7 +103,10 @@ exports.sendSMS = function (req, res) {
 }
 /**
  * 校验短信验证码
- * 
+ *
+{
+  "verification": "123456",
+}
 验证通过
 
 {
