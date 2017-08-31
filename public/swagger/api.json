@@ -575,14 +575,14 @@
                 }
             }
         },
-        "/api/utils/smsValidTest": {
+        "/api/utils/smsValid": {
             "post": {
                 "tags": [
                     "utils"
                 ],
                 "summary": "验证短信",
                 "description": "验证短信",
-                "operationId": "smsValidTest",
+                "operationId": "smsValid",
                 "produces": [
                     "application/json"
                 ],

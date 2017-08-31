@@ -64,7 +64,7 @@ exports.signInWithPhone = async function (req, res) {
 	if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
 	if (!verification) return res.api_error({ code: code.getErrorCode_name('auth_verification_null'), msg: code.getErrorMessage_name('auth_verification_null') })
 	//校验短信验证码
-	let isvalid = await utils_ctrl.smsValid(req)
+	let isvalid = await utils_ctrl.smsValid_(req)
 	if (!isvalid) return res.api_error({ code: code.getErrorCode_name('auth_verification_err'), msg: code.getErrorMessage_name('auth_verification_err') })
 	Auth.findOneAsync({ phone: phone },'-password -__v').then(doc => {
 		if (doc) {

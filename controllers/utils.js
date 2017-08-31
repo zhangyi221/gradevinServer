@@ -44,10 +44,10 @@ exports.getJpg = function (req, res) {
 exports.getAd = function (req, res) {
   var document_path = 'ad'
   var path = req.query.path
-  mongoose.connection.db.collection(document_path).find({"path": path}, {_id:0}).toArray().then(doc => {
-      return res.api(doc, { code: 0, msg: '查询成功' })
+  mongoose.connection.db.collection(document_path).find({ "path": path }, { _id: 0 }).toArray().then(doc => {
+    return res.api(doc, { code: 0, msg: '查询成功' })
   }).catch(err => {
-      return res.api_error( { code: 99999, msg: err.message })
+    return res.api_error({ code: 99999, msg: err.message })
   })
 }
 /**
@@ -102,108 +102,40 @@ exports.sendSMS = function (req, res) {
   })
 }
 /**
- * 校验短信验证码(测试专用)
+ * 校验短信验证码
+ * 
+验证通过
+
+{
+    "is_valid": true
+}
+验证不通过
+
+{
+    "is_valid": false,
+    "error": {
+        "code": *****,
+        "message": "******"
+    }
+}
  */
-exports.smsValidTest = async function (req, res) {
-  req.session.msg_id = req.body.msg_id
-  let verification = req.body.verification
-  return res.api({ is_valid: await utils_ctrl.smsValid(req) }, { code: 0, msg: '校验完成' })
+exports.smsValid = async function (req, res) {
+  let isvalid 
+  isvalid = await utils_ctrl.smsValid_boolean(req)
+  if (!isvalid) {
+    return res.api_error({ code: code.getErrorCode_name('auth_verification_err'), msg: code.getErrorMessage_name('auth_verification_err') })
+  } else {
+    return res.api({"is_valid": true}, { code: 0, msg: '校验成功' })
+  }
 }
 /**
  * 校验短信验证码
- * 
-验证通过
-
-{
-    "is_valid": true
-}
-验证不通过
-
-{
-    "is_valid": false,
-    "error": {
-        "code": *****,
-        "message": "******"
-    }
-}
+ * return boolean
  */
-exports.smsValid = function (req) {
+exports.smsValid_boolean = function (req) {
   let msg_id = req.session.msg_id//发送短信后记录的msg_id
   let verification = req.body.verification//客户输入的短信验证码
-  let appKey = require('../config/jpush').appKey
-  let masterSecret = require('../config/jpush').masterSecret
-  let smsvalidurl = require('../config/jpush').smsvalidurl
-  smsvalidurl = smsvalidurl.replaceAll('{msg_id}', msg_id)
-  let basicToken = appKey + ':' + masterSecret
-  let basicToken_buffer = new Buffer(basicToken)
-  let basicTokenBase64 = basicToken_buffer.toString('base64');
-
-  let options = {
-    url: smsvalidurl,
-    headers: {
-      'Authorization': 'Basic ' + basicTokenBase64,
-      'content-type': 'application/json; charset=utf-8'
-    },
-    json: true,
-    body: {
-      code: verification
-    }
-  }
-  // request.post(options).then(err,httpResponse,body =>{
-  //   if (err) {
-  //     console.log('短信验证码err',err)
-  //       // return res.api_error( { code: 99999, msg: err.message })
-  //       return false
-  //   }
-  //   if (typeof(body.error) != 'undefined'){
-  //      console.log('短信验证码失败',body)
-  //     // return res.api_error( { code: body.error.code, msg: body.error.message })
-  //     return false
-  //   }
-  //   // return res.api(body, { code: 0, msg: '发送成功' })
-  //   return true
-  // }).catch(err => {
-  //   //return res.api_error({ code: 99999, msg: err.message })
-  //   return false
-  // })
-  return new Promise(function (resolve, reject) {
-    request.post(options, function (err, httpResponse, body) {
-      if (err) {
-        console.log('短信验证码err', err)
-        // return res.api_error( { code: 99999, msg: err.message })
-        resolve(false)
-      }
-      if (typeof (body.error) != 'undefined') {
-        console.log('短信验证码失败', body)
-        // return res.api_error( { code: body.error.code, msg: body.error.message })
-        resolve(false)
-      }
-      // return res.api(body, { code: 0, msg: '发送成功' })
-      resolve(true)
-    })
-  })
-
-}/**
- * 校验短信验证码
- * 
-验证通过
-
-{
-    "is_valid": true
-}
-验证不通过
-
-{
-    "is_valid": false,
-    "error": {
-        "code": *****,
-        "message": "******"
-    }
-}
- */
-exports.smsValid = function (req) {
-  let msg_id = req.session.msg_id//发送短信后记录的msg_id
-  let verification = req.body.verification//客户输入的短信验证码
+  if (!msg_id || !verification) return false
   let appKey = require('../config/jpush').appKey
   let masterSecret = require('../config/jpush').masterSecret
   let smsvalidurl = require('../config/jpush').smsvalidurl
@@ -271,12 +203,12 @@ exports.captcha = function (req, res) {
 /**
  * 校验验证码captcha
  */
-exports.captchaValid = function (req,res) {
+exports.captchaValid = function (req, res) {
   let captcha_ = req.body.captcha//上传captcha
   let captcha = req.session.captcha//服务端captcha
   if (!_.isEqual(_.toUpper(captcha_), _.toUpper(captcha))) {
     //请正确输入验证码
-		return res.api_error({ code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') })
+    return res.api_error({ code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') })
   } else {
     return res.api(null, { code: 0, msg: '校验成功' })
   }
