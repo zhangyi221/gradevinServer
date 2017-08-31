@@ -99,6 +99,24 @@ exports.createUserIsUsedByPhone = function (req, res) {
 		return res.api_error({ code: 99999, msg: err.message })
 	})
 }
+/**
+ * 邮箱是否注册
+ * */
+exports.createUserIsUsedByEmail = function (req, res) {
+	let email = req.query.email//手机号
+	//判断输入参数
+	if (!email) return res.api_error({ code: code.getErrorCode_name('auth_email_null'), msg: code.getErrorMessage_name('auth_email_null') })
+	Auth.findOneAsync({ email: email }).then(doc => {
+		if (doc) {
+			//该邮箱地址已经注册或绑定
+			return res.api_error({ code: code.getErrorCode_name('auth_email_exist'), msg: code.getErrorMessage_name('auth_email_exist') })
+		} else {
+			return res.api({ is_userd: false }, { code: 0, msg: '交易成功' })
+		}
+	}).catch(err => {
+		return res.api_error({ code: 99999, msg: err.message })
+	})
+}
 
 /**
  * 用户退出

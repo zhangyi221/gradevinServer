@@ -10,6 +10,8 @@ router.post('/signInWithEmailAndPassword', auth_ctrl.signInWithEmailAndPassword)
 router.post('/signInWithPhone', auth_ctrl.signInWithPhone)
 // 使用手机号码查询是否注册
 router.get('/createUserIsUsedByPhone', auth_ctrl.createUserIsUsedByPhone)
+// 邮箱是否注册
+router.get('/createUserIsUsedByEmail', auth_ctrl.createUserIsUsedByEmail)
 // 新增用户
 router.post('/createUserWithEmailAndPassword', auth_ctrl.createUserWithEmailAndPassword)
 // 通过邮箱重置密码

@@ -126,9 +126,9 @@
                 "tags": [
                     "auth"
                 ],
-                "summary": "获取验证码",
-                "description": "获取验证码",
-                "operationId": "captcha",
+                "summary": "检查手机是否被注册",
+                "description": "检查手机是否被注册",
+                "operationId": "createUserIsUsedByPhone",
                 "produces": [
                     "application/json"
                 ],
@@ -140,6 +140,34 @@
                         "required": true,
                         "type": "string",
                         "default": "13552655560"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/auth/createUserIsUsedByEmail": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "检查邮箱是否被注册",
+                "description": "检查邮箱是否被注册",
+                "operationId": "createUserIsUsedByEmail",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "邮箱地址",
+                        "required": true,
+                        "type": "string",
+                        "default": "yid@163.com"
                     }
                 ],
                 "responses": {

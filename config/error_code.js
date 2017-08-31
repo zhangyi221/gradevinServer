@@ -21,6 +21,7 @@ var errorinfo =  [
     { errorfrom: 'server', errorname: 'auth_verification_err', code: '10015', enmessage_from: '', cnmessage_from: '', message_trans: '短信验证码错误' },
     { errorfrom: 'server', errorname: 'auth_phone_noexist', code: '10016', enmessage_from: '', cnmessage_from: '', message_trans: '该手机号尚未注册或绑定' },
     { errorfrom: 'server', errorname: 'auth_phone_exist', code: '10017', enmessage_from: '', cnmessage_from: '', message_trans: '该手机号已经注册或绑定' },
+    { errorfrom: 'server', errorname: 'auth_email_exist', code: '10018', enmessage_from: '', cnmessage_from: '', message_trans: '该邮箱地址已经注册或绑定' },
     
     { errorfrom: 'server', errorname: 'user_uid_Valid', code: '10101', enmessage_from: '', cnmessage_from: '', message_trans: '输入的UID不合法' },
     { errorfrom: 'server', errorname: 'user_params_null', code: '10102', enmessage_from: '', cnmessage_from: '', message_trans: '输入的参数不能为空' },
