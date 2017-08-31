@@ -18,7 +18,6 @@
 * actives,激活状态,0激活,1发送邮件待验证
 */
 var mongoose = require('mongoose');
-//var md5 = require('../utils/md5')
 
 var config = require('../config/' + process.env.NODE_ENV)
 var MAX_LOGIN_ATTEMPTS = config.MAX_LOGIN_ATTEMPTS

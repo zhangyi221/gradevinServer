@@ -6,7 +6,6 @@ var Auth = require('../models/auth')
 var StringToken = require('../models/stringtoken')
 var code = require('../config/error_code')
 var util = require('../utils/util')
-var md5 = require('../utils/md5')
 var push = require('../utils/socketio-push')
 var redis = require('../utils/redis')
 /**
@@ -83,7 +82,7 @@ exports.updatePasswordByStringtoken = function (req, res) {
 		var email = doc.email
 		const updates = {
 			$set: {
-				password: md5(password)
+				password: password
 			}
 		}
 		const find = {

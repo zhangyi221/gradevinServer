@@ -4,7 +4,6 @@
 var randToken = require('rand-url-token')
 var tokenUtil = require('../utils/token')
 var code = require('../config/error_code')
-var md5 = require('../utils/md5')
 var config = require('../config/' + process.env.NODE_ENV)
 var email_config = require('../config/email')
 var sendEmail = require('../utils/email')
@@ -130,23 +129,6 @@ exports.signOut = function (req, res) {
 }
 
 /**
-	 * 创建超级管理员
-	 */
-exports.initSuperAdmin = function (req, res) {
-	const username = config.superAdmin.username
-	const password = config.superAdmin.password
-
-	Auth.findByName(username)
-		.then(doc => {
-			if (!doc) return this.model.newAndSave({
-				username: username,
-				password: md5(password),
-			})
-		}).catch(err => {
-			return res.api_error({ code: 99999, msg: err.message })
-		})
-}
-/**
  * @apiDescription 用户注册
  * @apiParam {String} email 用户名
  * @apiParam {String} password 密码
@@ -181,7 +163,6 @@ exports.createUserWithEmailAndPassword = function (req, res) {
 				new Auth({
 					displayName: displayName,
 					email: email,
-					//password: md5(password),
 					password: password,
 					isActivate: true,
 					activate: '1'
@@ -204,7 +185,7 @@ exports.createUserWithEmailAndPassword = function (req, res) {
 				new Auth({
 					displayName: displayName,
 					email: email,
-					password: md5(password)
+					password: password,
 				}).save();
 				return res.api(null, { code: 0, msg: '注册成功' })
 			}
