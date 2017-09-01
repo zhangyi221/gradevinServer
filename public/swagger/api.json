@@ -206,6 +206,35 @@
                 }
             }
         },
+        "/api/auth/createUserWithPhone": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "使用手机号码注册",
+                "description": "使用手机号码注册",
+                "operationId": "createUserWithPhone",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SingUp_Phone_Data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/auth/sendPasswordResetEmail": {
             "post": {
                 "tags": [
@@ -900,6 +929,31 @@
             },
             "xml": {
                 "name": "SingUp_Email_Data"
+            }
+        },
+        "SingUp_Phone_Data": {
+            "type": "object",
+            "properties": {
+                "phone": {
+                    "type": "string",
+                    "example": "11111111111"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "111111"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "111@111.com"
+                },
+                "displayName": {
+                    "type": "string",
+                    "example": "张一"
+                }
+                
+            },
+            "xml": {
+                "name": "SingUp_Phone_Data"
             }
         },
         "smsValid_data": {

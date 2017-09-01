@@ -147,19 +147,10 @@ exports.signOut = function (req, res) {
 }
 
 /**
- * @apiDescription 用户注册
- * @apiParam {String} email 用户名
- * @apiParam {String} password 密码
- * @aipParam {string} displayName 姓名
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "meta": {
- *       	"code": 0,
- *       	"message": "注册成功"
- *       },
- *       "data": null
- *     }
+ * @description 使用邮箱密码注册用户
+ * @param email 用户名
+ * @param password 密码
+ * @param displayName 姓名
  */
 exports.createUserWithEmailAndPassword = function (req, res) {
 	let email = req.body.email
@@ -215,7 +206,39 @@ exports.createUserWithEmailAndPassword = function (req, res) {
 		return res.api_error({ code: 99999, msg: err.message })
 	})
 }
+/**
+ * @description 使用手机注册
+ * @param phone
+ * @param email 
+ * @param password ASE过的
+ * @param displayName
+ */
+exports.createUserWithPhone = function (req, res) {
+	let phone = req.body.phone
+	let email = req.body.email
+	let password = req.body.password
+	let displayName = req.body.displayName
+	//校验输入参数
+	if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })//手机号不能为空
+	if (!email) return res.api_error({ code: code.getErrorCode_name('auth_email_null'), msg: code.getErrorMessage_name('auth_email_null') })//邮箱地址不能为空
+	if (!password) return res.api_error({ code: code.getErrorCode_name('auth_pass_null'), msg: code.getErrorMessage_name('auth_pass_null') })//密码不能为空
+	//自动生成
+	if (!displayName) {
+		displayName = randToken(8) + '(' + email + ')'
+	}
 
+	new Auth({
+		phone: phone,
+		displayName: displayName,
+		email: email,
+		password: password,
+	}).save().then(doc =>{
+		console.log(doc)
+		return res.api(doc, { code: 0, msg: '注册成功' })
+	}).catch(err => {
+		return res.api_error({ code: 99999, msg: err.message })
+	})
+}
 /**
  * 通过邮箱重置密码
  * @param email

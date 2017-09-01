@@ -37,7 +37,10 @@ var UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    phone: String,
+    phone: {
+        type: String,
+        index:true
+    },
     phoneVerified: Boolean,
     isAnonymous: Boolean,
     photoURL: String,

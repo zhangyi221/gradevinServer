@@ -12,8 +12,10 @@ router.post('/signInWithPhone', auth_ctrl.signInWithPhone)
 router.get('/createUserIsUsedByPhone', auth_ctrl.createUserIsUsedByPhone)
 // 邮箱是否注册
 router.get('/createUserIsUsedByEmail', auth_ctrl.createUserIsUsedByEmail)
-// 新增用户
+// 邮箱注册用户
 router.post('/createUserWithEmailAndPassword', auth_ctrl.createUserWithEmailAndPassword)
+// 手机注册用户
+router.post('/createUserWithPhone', auth_ctrl.createUserWithPhone)
 // 通过邮箱重置密码
 router.post('/sendPasswordResetEmail', auth_ctrl.sendPasswordResetEmail)
 // 退出登录

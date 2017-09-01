@@ -32,6 +32,7 @@ module.exports = {
     /^\/api\/auth\/createUserIsUsedByEmail/,//查询邮箱是否被注册
     /^\/api\/auth\/sendPasswordResetEmail/,//通过邮箱重置密码
     /^\/api\/auth\/createUserWithEmailAndPassword/,//客户注册
+    /^\/api\/auth\/createUserWithPhone/,//使用手机注册
     /^\/api\/auth\/resendStringTokenByEmail/,//重发邮件
     /^\/api\/utils/,//图形验证码/获取图片等等
     /^\/web/,/^\/views/,/^\/static/,/^\/api\/user\/updatePasswordByStringtoken/,//web接口
