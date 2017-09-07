@@ -141,7 +141,7 @@ exports.smsValid_boolean = function (req) {
   if (!msg_id || !verification) return false
   let appKey = require('../config/jpush').appKey
   let masterSecret = require('../config/jpush').masterSecret
-  let smsvalidurl = require('../config/jpush').smsvalidurl
+  let smsvalidurl = _.clone(require('../config/jpush').smsvalidurl)
   smsvalidurl = smsvalidurl.replaceAll('{msg_id}', msg_id)
   let basicToken = appKey + ':' + masterSecret
   let basicToken_buffer = new Buffer(basicToken)
