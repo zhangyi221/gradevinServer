@@ -140,6 +140,8 @@ exports.smsValid_boolean = function (req) {
   //let msg_id = req.session.msg_id//发送短信后记录的msg_id
   let msg_id = req.cookies.msg_id//发送短信后记录的msg_id
   let verification = req.body.verification//客户输入的短信验证码
+  console.log('短信验证msg_id', msg_id)
+  console.log('短信验证verification', verification)
   if (!msg_id || !verification) return false
   let appKey = require('../config/jpush').appKey
   let masterSecret = require('../config/jpush').masterSecret
