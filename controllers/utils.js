@@ -96,7 +96,8 @@ exports.sendSMS = function (req, res) {
       return res.api_error({ code: body.error.code, msg: body.error.message })
     }
     if (typeof (body.msg_id) != 'undefined') {
-      req.session.msg_id = body.msg_id;
+      //req.session.msg_id = body.msg_id;
+      res.cookie('msg_id', body.msg_id)
     }
     return res.api(body, { code: 0, msg: '发送成功' })
   })
@@ -136,7 +137,8 @@ exports.smsValid = async function (req, res) {
  * return boolean
  */
 exports.smsValid_boolean = function (req) {
-  let msg_id = req.session.msg_id//发送短信后记录的msg_id
+  //let msg_id = req.session.msg_id//发送短信后记录的msg_id
+  let msg_id = req.cookies.msg_id//发送短信后记录的msg_id
   let verification = req.body.verification//客户输入的短信验证码
   if (!msg_id || !verification) return false
   let appKey = require('../config/jpush').appKey
