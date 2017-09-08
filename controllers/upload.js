@@ -62,31 +62,49 @@ exports.uploadImg64Qn = function (req, res) {
     var random = Math.random().toString(36).substr(2)
     var url = path + random
     
-
+    //先添加且返回结果
+    uploadQN(url, dataBuffer, res)
+    //删除path目录下所有文件
+    let options = {
+        exceptURL:url
+    }
+    deleteQN(path,options)
+}
+/**
+ * 删除path目录下所有文件
+ * @param path 目录
+ * @param options 参数,目前只有排除url
+ * {
+ * exceptURL:''排除url
+ * }
+ */
+function deleteQN(path,options) {
+    let url = options.exceptURL
     // @param options 列举操作的可选参数
-    //                prefix    列举的文件前缀
-    //                marker    上一次列举返回的位置标记，作为本次列举的起点信息
-    //                limit     每次返回的最大列举文件数量
-    //                delimiter 指定目录分隔符
-    var options = {
+    // prefix    列举的文件前缀
+    // marker    上一次列举返回的位置标记，作为本次列举的起点信息
+    // limit     每次返回的最大列举文件数量
+    // delimiter 指定目录分隔符
+    var options_qn = {
         prefix: path
     }
     var bucketManager = qiniu.bucketManager()
     //查找指定目录下所有文件
-    bucketManager.listPrefix(qiniu.bucket, options, function (respErr, respBody, respInfo) {
+    bucketManager.listPrefix(qiniu.bucket, options_qn, function (respErr, respBody, respInfo) {
         if (respErr) {
             return res.api_error({ code: respErr.code, msg: respErr.message })
         }
         if (respInfo.statusCode == 200) {
-            //先添加且返回结果
-            uploadQN(url, dataBuffer, res)
             //异步删除
             var items = respBody.items;
             if (items.length > 0) {
                 //删除再添加
                 var deleteOperations = []
                 items.forEach(function (item) {
-                    deleteOperations.push(qiniu.qiniu.rs.deleteOp(qiniu.bucket, item.key))
+                    if (item.key != url){
+                        deleteOperations.push(qiniu.qiniu.rs.deleteOp(qiniu.bucket, item.key))
+                    }
+                    
                 })
                 //删除指定文件
                 bucketManager.batch(deleteOperations, function (respErr, respBody, respInfo) {
@@ -105,7 +123,7 @@ exports.uploadImg64Qn = function (req, res) {
                 })
             } 
         } else {
-            return res.api_error({ code: respInfo.statusCode, msg: respInfo.data.error })
+            console.log('删除头像异常'+respInfo.statusCode , respInfo.data.error )
         }
     })
 }
