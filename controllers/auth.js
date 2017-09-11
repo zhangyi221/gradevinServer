@@ -58,15 +58,16 @@ exports.signInWithEmailAndPassword = function (req, res) {
  * 使用手机号码快速登录
 	 */
 exports.signInWithPhone = async function (req, res) {
-	let phone = req.body.phone//手机号
-	let verification = req.body.verification//验证码
-	//判断输入参数
-	if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
-	if (!verification) return res.api_error({ code: code.getErrorCode_name('auth_verification_null'), msg: code.getErrorMessage_name('auth_verification_null') })
-	//校验短信验证码
-	let isvalid = await utils_ctrl.smsValid_boolean(req)
-	if (!isvalid) return res.api_error({ code: code.getErrorCode_name('auth_verification_err'), msg: code.getErrorMessage_name('auth_verification_err') })
-	Auth.findOneAsync({ phone: phone },'-password -__v').then(doc => {
+	try {
+		let phone = req.body.phone//手机号
+		let verification = req.body.verification//验证码
+		//判断输入参数
+		if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
+		if (!verification) return res.api_error({ code: code.getErrorCode_name('auth_verification_null'), msg: code.getErrorMessage_name('auth_verification_null') })
+		//校验短信验证码
+		let isvalid = await utils_ctrl.smsValid_boolean(req)
+		if (!isvalid) return res.api_error({ code: code.getErrorCode_name('auth_verification_err'), msg: code.getErrorMessage_name('auth_verification_err') })
+		let doc = await Auth.findOneAsync({ phone: phone }, '-password -__v')
 		if (doc) {
 			//存在
 			let token = tokenUtil.generateToken(doc._id)
@@ -77,45 +78,47 @@ exports.signInWithPhone = async function (req, res) {
 		} else {
 			return res.api_error({ code: code.getErrorCode_name('auth_phone_noexist'), msg: code.getErrorMessage_name('auth_phone_noexist') })
 		}
-	}).catch(err => {
+	} catch (err) {
 		return res.api_error({ code: 99999, msg: err.message })
-	})
+	}
 }
 /**
  * 使用手机号码查询是否注册
  * */
-exports.createUserIsUsedByPhone = function (req, res) {
-	let phone = req.query.phone//手机号
-	//判断输入参数
-	if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
-	Auth.findOneAsync({ phone: phone }).then(doc => {
+exports.createUserIsUsedByPhone = async function (req, res) {
+	try {
+		let phone = req.query.phone//手机号
+		//判断输入参数
+		if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
+		let doc = await Auth.findOneAsync({ phone: phone })
 		if (doc) {
 			//该手机号已经注册或绑定
 			return res.api_error({ code: code.getErrorCode_name('auth_phone_exist'), msg: code.getErrorMessage_name('auth_phone_exist') })
 		} else {
 			return res.api({ is_userd: false }, { code: 0, msg: '交易成功' })
 		}
-	}).catch(err => {
+	} catch (err) {
 		return res.api_error({ code: 99999, msg: err.message })
-	})
+	}
 }
 /**
  * 邮箱是否注册
  * */
-exports.createUserIsUsedByEmail = function (req, res) {
-	let email = req.query.email//手机号
-	//判断输入参数
-	if (!email) return res.api_error({ code: code.getErrorCode_name('auth_email_null'), msg: code.getErrorMessage_name('auth_email_null') })
-	Auth.findOneAsync({ email: email }).then(doc => {
+exports.createUserIsUsedByEmail = async function (req, res) {
+	try {
+		let email = req.query.email//手机号
+		//判断输入参数
+		if (!email) return res.api_error({ code: code.getErrorCode_name('auth_email_null'), msg: code.getErrorMessage_name('auth_email_null') })
+		let doc = await Auth.findOneAsync({ email: email })
 		if (doc) {
 			//该邮箱地址已经注册或绑定
 			return res.api_error({ code: code.getErrorCode_name('auth_email_exist'), msg: code.getErrorMessage_name('auth_email_exist') })
 		} else {
 			return res.api({ is_userd: false }, { code: 0, msg: '交易成功' })
 		}
-	}).catch(err => {
+	} catch (err) {
 		return res.api_error({ code: 99999, msg: err.message })
-	})
+	}
 }
 
 /**
@@ -132,8 +135,6 @@ exports.signOut = function (req, res) {
 			redis.redisClient.del('tokenid:' + token, function (err, reply) {
 				console.log('删除redis中token数据[' + reply + ']：');// 删除成功，返回1，否则返回0(对于不存在的键进行删除操作，同样返回0) 
 			});
-
-
 			req.session.destroy()
 			delete req.user
 			return res.api(null, { code: 0, msg: '退出成功' })
@@ -232,7 +233,7 @@ exports.createUserWithPhone = function (req, res) {
 		displayName: displayName,
 		email: email,
 		password: password,
-	}).save().then(doc =>{
+	}).save().then(doc => {
 		console.log(doc)
 		return res.api(doc, { code: 0, msg: '注册成功' })
 	}).catch(err => {
