@@ -6,6 +6,7 @@ var Auth = require('../models/auth')
 var StringToken = require('../models/stringtoken')
 var code = require('../config/error_code')
 var util = require('../utils/util')
+var CryptoJS = require('../utils/cryptojs')
 var push = require('../utils/socketio-push')
 var redis = require('../utils/redis')
 /**
@@ -70,10 +71,10 @@ exports.delete = function (req, res) {
 exports.updatePasswordByStringtoken = function (req, res) {
 	var password = req.body.password
 	var stringtoken = req.body.stringtoken
-
-	if (!password || !stringtoken){
-		return res.api_error( { code: code.getErrorCode_name('user_params_null'), msg: code.getErrorMessage_name('user_params_null') })//输入的参数不能为空
-	}
+	password = CryptoJS.md5(password)
+	// if (!password || !stringtoken){
+	// 	return res.api_error( { code: code.getErrorCode_name('user_params_null'), msg: code.getErrorMessage_name('user_params_null') })//输入的参数不能为空
+	// }
 	
 	StringToken.findOneAsync({ stringtoken: stringtoken }).then(doc => {
 		if (!doc) {
@@ -82,7 +83,7 @@ exports.updatePasswordByStringtoken = function (req, res) {
 		var email = doc.email
 		const updates = {
 			$set: {
-				password: password
+				password: md5(password)
 			}
 		}
 		const find = {
