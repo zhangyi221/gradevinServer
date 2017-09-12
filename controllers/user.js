@@ -72,9 +72,9 @@ exports.updatePasswordByStringtoken = function (req, res) {
 	var password = req.body.password
 	var stringtoken = req.body.stringtoken
 	password = CryptoJS.md5(password)
-	// if (!password || !stringtoken){
-	// 	return res.api_error( { code: code.getErrorCode_name('user_params_null'), msg: code.getErrorMessage_name('user_params_null') })//输入的参数不能为空
-	// }
+	if (!password || !stringtoken){
+		return res.api_error( { code: code.getErrorCode_name('user_params_null'), msg: code.getErrorMessage_name('user_params_null') })//输入的参数不能为空
+	}
 	
 	StringToken.findOneAsync({ stringtoken: stringtoken }).then(doc => {
 		if (!doc) {
