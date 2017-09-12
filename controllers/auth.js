@@ -30,10 +30,10 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 		//return res.api_error({ code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_null') })
 
 		//验证码验证,以后添加
-		// if (!_.isEqual(_.toUpper(captcha_), _.toUpper(captcha))) {
-		// 	//请正确输入验证码
-		// 	return res.api_error({ code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') })
-		// }
+		if (!_.isEqual(_.toUpper(captcha_), _.toUpper(captcha))) {
+			//请正确输入验证码
+			throw { code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') }
+		}
 		let doc = await Auth.getAuthenticated(email, password)
 		if (doc == 0) {
 			throw { code: code.getErrorCode_name('auth_user_noexist'), msg: code.getErrorMessage_name('auth_user_noexist') }//用户不存在或邮箱地址不正确
