@@ -24,7 +24,6 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 	let password = req.body.password
 	let captcha_ = req.body.captcha//上传captcha
 	let captcha = req.session.captcha//服务端captcha
-	console.log('email='+email + '|password='+password + '|captcha_=' +captcha_)
 	try {
 		//邮箱地址或密码不能为空
 		if (!email || !password) throw { code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_null') }
@@ -35,9 +34,7 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 			//请正确输入验证码
 			throw { code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') }
 		}
-		console.log('准备查询')
 		let doc = await Auth.getAuthenticated(email, password)
-		console.log('查询完成',doc)
 		if (doc == 0) {
 			throw { code: code.getErrorCode_name('auth_user_noexist'), msg: code.getErrorMessage_name('auth_user_noexist') }//用户不存在或邮箱地址不正确
 		}
@@ -55,7 +52,6 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 		redis.redisClient.expire('tokenid:' + token, config.TOKEN_EXPIRATION)
 		util.setSessionUserInfo(req, doc)
 		// res.cookie('token', token)
-		console.log('开始记录日志')
 		//记录登录日志
 		new log_login({
 			user_id: doc._id,
@@ -66,7 +62,6 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 		}).save()
 		return res.api({ token: token, user: doc }, { code: 0, msg: '交易成功' })
 	} catch (err) {
-		console.log('发生异常',err)
 		//记录登录日志
 		let code = (typeof (err.code) != 'undefined') ? err.code : 99999
 		let message = (typeof (err.msg) != 'undefined') ? err.msg : err.message
