@@ -27,7 +27,7 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 	console.log('email='+email + '|password='+password + '|captcha_=' +captcha_)
 	try {
 		//邮箱地址或密码不能为空
-		if (!email || !password) throw { code: code.getErrorCode_name('auth_emailpass_null'), message: code.getErrorMessage_name('auth_emailpass_null') }
+		if (!email || !password) throw { code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_null') }
 		//return res.api_error({ code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_null') })
 
 		//验证码验证,以后添加
@@ -68,18 +68,18 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 	} catch (err) {
 		console.log('发生异常',err)
 		//记录登录日志
-		let code = 99999
-		if (typeof (err.code) != 'undefined') code = err.code
+		let code = (typeof (err.code) != 'undefined') ? err.code : 99999
+		let message = (typeof (err.msg) != 'undefined') ? err.msg : err.message
 		new log_login({
 			email: email,
 			password: password,
 			type: 'email',
 			islogin: false,
 			errcode: code,
-			errmessage: err.message
+			errmessage: message
 		}).save()
 		
-		return res.api_error({ code: code, msg: err.message })
+		return res.api_error({ code: code, msg: message })
 	}
 }
 /**
@@ -118,17 +118,18 @@ exports.signInWithPhone = async function (req, res) {
 
 	} catch (err) {
 		//记录登录日志
-		let code = (!err.code) ? 99999 : err.code
+		let code = (typeof (err.code) != 'undefined') ? err.code : 99999
+		let message = (typeof (err.msg) != 'undefined') ? err.msg : err.message
 		new log_login({
 			email: email,
 			password: password,
 			type: 'email',
 			islogin: false,
 			errcode: code,
-			errmessage: err.message
+			errmessage: message
 		}).save()
 		
-		return res.api_error({ code: code, msg: err.message })
+		return res.api_error({ code: code, msg: message })
 	}
 }
 /**
