@@ -68,7 +68,8 @@ exports.signInWithEmailAndPassword = async function (req, res) {
 	} catch (err) {
 		console.log('发生异常',err)
 		//记录登录日志
-		let code = (!err.code) ? 99999 : err.code
+		let code = 99999
+		if (typeof (err.code) != 'undefined') code = err.code
 		new log_login({
 			email: email,
 			password: password,
