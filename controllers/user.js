@@ -71,7 +71,6 @@ exports.delete = function (req, res) {
 exports.updatePasswordByStringtoken = function (req, res) {
 	var password = req.body.password
 	var stringtoken = req.body.stringtoken
-	password = CryptoJS.md5(password)
 	if (!password || !stringtoken){
 		return res.api_error( { code: code.getErrorCode_name('user_params_null'), msg: code.getErrorMessage_name('user_params_null') })//输入的参数不能为空
 	}
@@ -83,7 +82,7 @@ exports.updatePasswordByStringtoken = function (req, res) {
 		var email = doc.email
 		const updates = {
 			$set: {
-				password: md5(password)
+				password: CryptoJS.md5(password)
 			}
 		}
 		const find = {
