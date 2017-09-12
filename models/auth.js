@@ -10,12 +10,14 @@
 * providerId,当前帐户登录使用的身份认证提供商名称，例如 weibo，weixin。
 * uid,用户id,这里是Wilddog Id
 * password,密码
+* isPassword,是否存在密码
 * createDate,创建日期
 * updateDate,更新日期
 * lockUntil,锁过期时间
 * loginAttempts,登录失败次数
 * isActivate,账户注册时是否需要用户邮箱激活激活
 * actives,激活状态,0激活,1发送邮件待验证
+* signupType,注册方式,email,phone,....,other
 */
 var mongoose = require('mongoose');
 
@@ -36,6 +38,11 @@ var UserSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    isPassword: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     phone: {
         type: String,

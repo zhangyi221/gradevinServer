@@ -12,47 +12,70 @@ var redis = require('../utils/redis')
 var utils_ctrl = require('../controllers/utils')
 var Auth = require('../models/auth')
 var StringToken = require('../models/stringtoken')
+var log_login = require('../models/log_login')
 var push = require('../utils/socketio-push')
 var _ = require('lodash')
 
 /**
  * 使用用户邮箱和密码登录
 	 */
-exports.signInWithEmailAndPassword = function (req, res) {
+exports.signInWithEmailAndPassword = async function (req, res) {
 	let email = req.body.email
 	let password = req.body.password
 	let captcha_ = req.body.captcha//上传captcha
 	let captcha = req.session.captcha//服务端captcha
-	//邮箱地址或密码不能为空
-	if (!email || !password) return res.api_error({ code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_null') })
-	//验证码验证,以后添加
-	if (!_.isEqual(_.toUpper(captcha_), _.toUpper(captcha))) {
-		//请正确输入验证码
-		return res.api_error({ code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') })
-	}
+	try {
+		//邮箱地址或密码不能为空
+		if (!email || !password) throw { code: code.getErrorCode_name('auth_emailpass_null'), message: code.getErrorMessage_name('auth_emailpass_null') }
+		//return res.api_error({ code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_null') })
 
-	Auth.getAuthenticated(email, password).then(doc => {
+		//验证码验证,以后添加
+		// if (!_.isEqual(_.toUpper(captcha_), _.toUpper(captcha))) {
+		// 	//请正确输入验证码
+		// 	return res.api_error({ code: code.getErrorCode_name('auth_captcha_err'), msg: code.getErrorMessage_name('auth_captcha_err') })
+		// }
+		let doc = await Auth.getAuthenticated(email, password)
 		if (doc == 0) {
-			return res.api_error({ code: code.getErrorCode_name('auth_user_noexist'), msg: code.getErrorMessage_name('auth_user_noexist') })//用户不存在或邮箱地址不正确
+			throw { code: code.getErrorCode_name('auth_user_noexist'), msg: code.getErrorMessage_name('auth_user_noexist') }//用户不存在或邮箱地址不正确
 		}
 		if (doc == 1) {
-			return res.api_error({ code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_error') })//邮箱或密码错误
+			throw { code: code.getErrorCode_name('auth_emailpass_null'), msg: code.getErrorMessage_name('auth_emailpass_error') }//邮箱或密码错误
 		}
 		if (doc == 2) {
-			return res.api_error({ code: code.getErrorCode_name('auth_name_islucked'), msg: code.getErrorMessage_name('auth_name_islucked') })//账号已被锁定，请稍后重新尝试
+			throw { code: code.getErrorCode_name('auth_name_islucked'), msg: code.getErrorMessage_name('auth_name_islucked') }//账号已被锁定，请稍后重新尝试
 		}
 		if (doc == 3) {
-			return res.api_error({ code: code.getErrorCode_name('auth_email_activate_not'), msg: code.getErrorMessage_name('auth_email_activate_not') })//用户尚未邮件激活，请激活后重新尝试
+			throw { code: code.getErrorCode_name('auth_email_activate_not'), msg: code.getErrorMessage_name('auth_email_activate_not') }//用户尚未邮件激活，请激活后重新尝试
 		}
 		let token = tokenUtil.generateToken(doc._id)
 		redis.redisClient.set('tokenid:' + token, doc._id.toString())
 		redis.redisClient.expire('tokenid:' + token, config.TOKEN_EXPIRATION)
 		util.setSessionUserInfo(req, doc)
 		// res.cookie('token', token)
+
+		//记录登录日志
+		new log_login({
+			user_id: doc._id,
+			email: email,
+			password: password,
+			type: 'email',
+			islogin: true,
+		}).save()
 		return res.api({ token: token, user: doc }, { code: 0, msg: '交易成功' })
-	}).catch(err => {
-		return res.api_error({ code: 99999, msg: err.message })
-	})
+	} catch (err) {
+		//记录登录日志
+		let code = (!err.code) ? 99999 : err.code
+		new log_login({
+			email: email,
+			password: password,
+			type: 'email',
+			islogin: false,
+			errcode: code,
+			errmessage: err.message
+		}).save()
+		
+		return res.api_error({ code: code, msg: err.message })
+	}
 }
 /**
  * 使用手机号码快速登录
@@ -62,11 +85,11 @@ exports.signInWithPhone = async function (req, res) {
 		let phone = req.body.phone//手机号
 		let verification = req.body.verification//验证码
 		//判断输入参数
-		if (!phone) return res.api_error({ code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') })
-		if (!verification) return res.api_error({ code: code.getErrorCode_name('auth_verification_null'), msg: code.getErrorMessage_name('auth_verification_null') })
+		if (!phone) throw { code: code.getErrorCode_name('auth_phone_null'), msg: code.getErrorMessage_name('auth_phone_null') }
+		if (!verification) throw { code: code.getErrorCode_name('auth_verification_null'), msg: code.getErrorMessage_name('auth_verification_null') }
 		//校验短信验证码
 		let isvalid = await utils_ctrl.smsValid_boolean(req)
-		if (!isvalid) return res.api_error({ code: code.getErrorCode_name('auth_verification_err'), msg: code.getErrorMessage_name('auth_verification_err') })
+		if (!isvalid) throw { code: code.getErrorCode_name('auth_verification_err'), msg: code.getErrorMessage_name('auth_verification_err') }
 		let doc = await Auth.findOneAsync({ phone: phone }, '-password -__v')
 		if (doc) {
 			//存在
@@ -74,12 +97,33 @@ exports.signInWithPhone = async function (req, res) {
 			redis.redisClient.set('tokenid:' + token, doc._id.toString())
 			redis.redisClient.expire('tokenid:' + token, config.TOKEN_EXPIRATION)
 			util.setSessionUserInfo(req, doc)
+
+			//记录登录日志
+			new log_login({
+				user_id: doc._id,
+				phone: phone,
+				type: 'phone',
+				islogin: true,
+			}).save()
+
 			return res.api({ token: token, user: doc }, { code: 0, msg: '交易成功' })
 		} else {
 			return res.api_error({ code: code.getErrorCode_name('auth_phone_noexist'), msg: code.getErrorMessage_name('auth_phone_noexist') })
 		}
+
 	} catch (err) {
-		return res.api_error({ code: 99999, msg: err.message })
+		//记录登录日志
+		let code = (!err.code) ? 99999 : err.code
+		new log_login({
+			email: email,
+			password: password,
+			type: 'email',
+			islogin: false,
+			errcode: code,
+			errmessage: err.message
+		}).save()
+		
+		return res.api_error({ code: code, msg: err.message })
 	}
 }
 /**
@@ -174,8 +218,10 @@ exports.createUserWithEmailAndPassword = function (req, res) {
 					displayName: displayName,
 					email: email,
 					password: password,
+					isPassword: true,
 					isActivate: true,
-					activate: '1'
+					activate: '1',
+					signupType: 'email'
 				}).save().then(() => {
 					//2、生成stringtoken
 					generateStringToken(email).then(stringtoken => {
@@ -196,6 +242,8 @@ exports.createUserWithEmailAndPassword = function (req, res) {
 					displayName: displayName,
 					email: email,
 					password: password,
+					isPassword: true,
+					signupType: 'email'
 				}).save();
 				return res.api(null, { code: 0, msg: '注册成功' })
 			}
@@ -233,6 +281,8 @@ exports.createUserWithPhone = function (req, res) {
 		displayName: displayName,
 		email: email,
 		password: password,
+		isPassword: true,
+		signupType: 'phone'
 	}).save().then(doc => {
 		console.log(doc)
 		return res.api(doc, { code: 0, msg: '注册成功' })
