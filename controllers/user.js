@@ -90,14 +90,10 @@ exports.updatePasswordByStringtoken = function (req, res) {
 			email: email
 		}
 		doc.remove()
-		Auth.findOneAndUpdateAsync(find, updates).then(doc => {
-			//更新session
-			if (typeof (res.session.user) != 'undefined'){
-				res.session.user.isPassword = true
-			}
+		Auth.findOneAndUpdateAsync(find, updates,'-password -__v').then(doc => {
 			//推送监听消息
 			let msg = JSON.stringify(doc)
-			push.pushMsgToSingleDevice(req.session.user._id.toString(),'user',msg)
+			push.pushMsgToSingleDevice(doc._id.toString(),'user',msg)
 			return res.api( { code: 0, msg: '密码修改成功' })
 		})
 	}).catch(err => {
