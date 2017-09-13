@@ -193,7 +193,9 @@ exports.setSessionUserInfo = function (req, doc) {
         createDate: doc.createDate,
         updateDate: doc.updateDate,
         isActivate: doc.isActivate,
-        active: doc.active
+        active: doc.active,
+        isPassword: doc.isPassword,
+        signupType: doc.signupType
     })
     req.session.user = user_obj
 }

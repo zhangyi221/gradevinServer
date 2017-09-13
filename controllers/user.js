@@ -82,7 +82,8 @@ exports.updatePasswordByStringtoken = function (req, res) {
 		var email = doc.email
 		const updates = {
 			$set: {
-				password: CryptoJS.md5(password)
+				password: CryptoJS.md5(password),
+				isPassword: true
 			}
 		}
 		const find = {
@@ -90,6 +91,13 @@ exports.updatePasswordByStringtoken = function (req, res) {
 		}
 		doc.remove()
 		Auth.findOneAndUpdateAsync(find, updates).then(doc => {
+			//更新session
+			if (typeof (res.session.user) != 'undefined'){
+				res.session.user.isPassword = true
+			}
+			//推送监听消息
+			let msg = JSON.stringify(doc)
+			push.pushMsgToSingleDevice(req.session.user._id.toString(),'user',msg)
 			return res.api( { code: 0, msg: '密码修改成功' })
 		})
 	}).catch(err => {
@@ -121,7 +129,7 @@ exports.update = function (req, res) {
 		doc.save()
 		req.session.user = doc
 		// sending to individual socketid (private message)
-		var msg = JSON.stringify(doc)
+		let msg = JSON.stringify(doc)
 		push.pushMsgToSingleDevice(req.session.user._id.toString(),'user',msg)
   		//io.to(req.session.user._id).emit('private system message','123123');
 		//res.io.sendSysMessange(req.session.user._id,'123123')
