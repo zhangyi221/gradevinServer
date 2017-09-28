@@ -858,6 +858,55 @@
                     }
                 }
             }
+        },
+        "/api/category/getCategory": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "获取类别",
+                "description": "获取类别",
+                "operationId": "getCategory",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/category/getSubCategory": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "获取子类别",
+                "description": "获取子类别",
+                "operationId": "getSubCategory",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "子类别id",
+                        "required": true,
+                        "type": "string",
+                        "default": "101"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
         }
     },
     "securityDefinitions": {

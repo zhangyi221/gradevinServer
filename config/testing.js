@@ -26,6 +26,7 @@ module.exports = {
     /^\/data\/data\/getAd/,//广告信息
     /^\/images/,//图片
     /^\/uploads/,//上传图片
+    /^\/api\/category/,//获取商品目录
     /^\/api\/auth\/signInWithEmailAndPassword/,//邮箱密码登录
     /^\/api\/auth\/signInWithPhone/,//手机号登录
     /^\/api\/auth\/createUserIsUsedByPhone/,//查询手机号是否被注册
