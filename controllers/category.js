@@ -20,10 +20,25 @@ exports.getCategory = async function (req, res) {
 					foreignField: 'path', // field from subcategories collection
 					as: 'ad'           
 				}
+				// $lookup: {
+				// 	from: 'category_sub',      // collection to join
+				// 	localField: 'id',          // field from categories collection
+				// 	foreignField: 'upid', // field from subcategories collection
+				// 	as: 'category_sub'           
+				// }
+			},
+			{
+				$lookup: {
+					from: 'category_sub',      // collection to join
+					localField: 'id',          // field from categories collection
+					foreignField: 'upid', // field from subcategories collection
+					as: 'sub'           
+				}
 			},
 			{
 				$project: {
 					ad: { "_id": 0 },
+					sub: { "_id": 0 },
 					_id : 0
 				}
 			}
