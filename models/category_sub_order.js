@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 
 var CategorySubOrderSchema = mongoose.Schema({
     id: {
-        type: Array
+        type: String
     },
     order: {
         type: Array
