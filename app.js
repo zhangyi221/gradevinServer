@@ -18,7 +18,6 @@ var makeDir = require('make-dir')
 makeDir('public/uploads/avatars/')
 //初始化错误码表
 var errorcode = require('./utils/error_code');
-
 errorcode.Init();
 //var logger = require('morgan');
 //自定义logger
