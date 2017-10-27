@@ -5,6 +5,7 @@ var ErrorCode = require('../models/errorcode');
 var errorinfo = [];
 exports.Init = async function () {
     this.errorinfo = await ErrorCode.find({ "errorfrom": 'server' }, { _id: 0 });
+    console.log('错误码初始化成功')
 }
 
 exports.errorinfo

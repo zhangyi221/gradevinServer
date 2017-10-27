@@ -12,7 +12,7 @@ redisClient.on('error', function (err) {
 })
 
 redisClient.on('connect', function () {
-  console.log('Redis is ready')
+  console.log('Redis初始化链接完毕')
 })
 
 exports.redis = redis

@@ -9,12 +9,14 @@ var mongoose_temp = require('mongoose')
 var mongoose = Promise.promisifyAll(mongoose_temp)
 
 
-var uri = 'mongodb://'+ config.username + ':' + config.userpassword + '@' + config.host + ':' + config.port + '/' + config.database
+var uri = 'mongodb://' + config.username + ':' + config.userpassword + '@' + config.host + ':' + config.port + '/' + config.database
 
 exports.Mongo = function () {
-    mongoose
-			.connect(uri, config.options)
-			.connection
-			.on('error', err => console.log('[mongoose] Error connecting to: ' + uri + '. ' + err))
-			.on('open', () => console.log('[mongoose] Successfully connected to: ' + uri))
+	mongoose
+		.connect(uri, config.options)
+		.connection
+		.on('error', err => console.log('[mongoose] Error connecting to: ' + uri + '. ' + err))
+		.on('open', () => console.log('[mongoose] Successfully connected to: ' + uri))
+
+	console.log('数据库初始化成功');
 }

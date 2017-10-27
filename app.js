@@ -31,7 +31,6 @@ var authorization = require('./middlewares/auth')
 var interceptor = require('./middlewares/interceptor')
 //根据路径来自动加载路由
 var mountRoutes = require('mount-routes')
-
 var cors = require('cors');//跨域
 
 //新建replacall

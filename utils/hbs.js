@@ -26,3 +26,5 @@ hbs.registerHelper('block', function(name) {
 
 // 注册子模版
 hbs.registerPartials(path.join(__dirname, '..', 'views', 'partials'))
+
+console.log('hbs模板初始化成功')
