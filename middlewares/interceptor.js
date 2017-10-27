@@ -7,7 +7,7 @@ var redis = require('../utils/redis')
 var cookie_util = require('../utils/cookie')
 var Auth = require('../models/auth')
 var util = require('../utils/util')
-var code = require('../config/error_code')
+var code = require('../utils/error_code')
 
 var cookieParser = require('cookie-parser');
 

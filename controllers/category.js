@@ -1,4 +1,4 @@
-var code = require('../config/error_code')
+var code = require('../utils/error_code')
 var config = require('../config/' + process.env.NODE_ENV)
 var Category = require('../models/category')
 var CategoryOrder = require('../models/category_order')

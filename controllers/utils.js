@@ -4,7 +4,7 @@ var glob = require("glob");
 var svgCaptcha = require('svg-captcha');
 var request = require('request');
 var utils_ctrl = require('./utils')
-var code = require('../config/error_code')
+var code = require('../utils/error_code')
 var _ = require('lodash')
 /**
  * 获取指定目录下jpg文件个数

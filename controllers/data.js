@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 var assert = require('assert');
 var _ = require('lodash');
-var code = require('../config/error_code')
+var code = require('../utils/error_code')
 var util = require('../utils/util')
 var dynamic = require('../models/dynamic')
 

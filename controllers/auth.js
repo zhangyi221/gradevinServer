@@ -3,7 +3,7 @@
  */
 var randToken = require('rand-url-token')
 var tokenUtil = require('../utils/token')
-var code = require('../config/error_code')
+var code = require('../utils/error_code')
 var config = require('../config/' + process.env.NODE_ENV)
 var email_config = require('../config/email')
 var sendEmail = require('../utils/email')

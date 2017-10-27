@@ -1,6 +1,6 @@
 var Auth = require('../models/auth')
 var StringToken = require('../models/stringtoken')
-var code = require('../config/error_code')
+var code = require('../utils/error_code')
 
 exports.passwordResetEmail = function (req, res, next) {
   var stringtoken = req.query.stringtoken
